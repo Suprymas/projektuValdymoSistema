@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100px;
@@ -9,6 +5,7 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;
 }
 
 .ProjectName{
@@ -16,10 +13,24 @@
 }
 
 .Projects{
-  background-color: orange;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
   color: white;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+body{
+  background: orange;
+}
+#newProject{
+  max-width: 150px;
+  margin-bottom: 15px;
+}
+#newProject1{
+  max-width: 150px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+.allProjects{
+  margin-left: 20px;
 }

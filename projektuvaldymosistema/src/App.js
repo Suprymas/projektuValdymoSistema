@@ -1,18 +1,26 @@
 import './App.css';
-import Project from './components/Project';
+import React, { useState, useEffect } from 'react';
+import ProjectList from './components/ProjectList';
+
 function App() {
   
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div className='ProjectName'>
-          <strong>Projektu Valdymo Sistema</strong>
+       <body>
+        <header className="App-header">
+          <div className='ProjectName'>
+            <strong>Projektu Valdymo Sistema</strong>
+          </div>
+        </header>
+        <div className='Projects'>
+          <button id='newProject'>Naujas Projektas</button>
+          <button id='newProject1'>Istrinti Projektus</button>
         </div>
-      </header>
-      <div className='Projects'>
-        <Project />
-      </div>
+        <div className='allProjects'>
+          <ProjectList/>
+        </div>
+      </body>
     </div>
   );
 }
