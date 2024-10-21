@@ -1,6 +1,9 @@
 h1{
     font-size: 20px;
 }
+.list{
+    flex: 1;
+}
 
 .ProjectProp{
     justify-content: center;
@@ -17,4 +20,33 @@ li{
 }
 button{
     margin-top: 10px;
+}
+
+#newProject{
+    max-width: 150px;
+    margin-bottom: 15px;
+}
+#newProject1{
+    max-width: 150px;
+    margin-top: 0px;
+
+}
+.Projects{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-top: 20px;
+  }
+
+.projectproperties{
+  display: flex;         /* Flexbox layout */
+  flex-direction: row;
+}
+
+.detailbutton{
+    margin-left: 15px;
+    min-width: 60px;
+    margin-right: 15px;
+    height: 80px;
+    margin-top: 40px;
 }

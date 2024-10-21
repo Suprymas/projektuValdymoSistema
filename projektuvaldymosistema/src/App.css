@@ -12,25 +12,16 @@
   padding-top: 25px;
 }
 
-.Projects{
-  display: flex;
-  flex-direction: column;
-  color: white;
-  padding-top: 20px;
-  padding-left: 20px;
-}
+
 body{
   background: orange;
 }
-#newProject{
-  max-width: 150px;
-  margin-bottom: 15px;
-}
-#newProject1{
-  max-width: 150px;
-  margin-top: 0px;
-  margin-bottom: 15px;
-}
+
 .allProjects{
   margin-left: 20px;
+  display: flex;         /* Flexbox layout */
+  flex-direction: row;   /* Align children horizontally */
+  height: 100vh;   
+  gap: 20px;
 }
+
