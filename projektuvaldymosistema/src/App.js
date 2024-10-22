@@ -20,7 +20,7 @@ function App() {
           </div>
         </header>
         <div className='allProjects'>
-          <ProjectList />
+          <ProjectList onProjectPress={handleProjectPress}/>
           <ProjectDetails />
         </div>
       </body>

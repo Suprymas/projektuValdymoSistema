@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { DoublyLinkedList } from "../dataStructs/doublyLinkedList";
 import './ProjectList.css';
 
@@ -9,62 +9,76 @@ const ProjectList = (props) => {
 
     useEffect(() => {
         if (projectsList.length === 0) { // Only add the project if the list is empty
-            const newProject = 'temp';
+            const newProject = {
+                name: 'Kebabine',
+                participants: 4,
+                endDate: '2024-12-30',
+                projectId: 'Keb',
+            }; 
             projectsList.addProject(newProject); // Add initial project
             setProjects([...projectsList.getAllProjects()]); // Update state
-        }  
+        }
     }, []);      
-    
-    const addNewProject = () =>
-    {
+
+    const addNewProject = () => {
         const newProject = {
             name: 'Kebabine',
             participants: 4,
             endDate: '2024-12-30',
-        }; // You can change the project name here
+            projectId: 'Keb',
+        };
         projectsList.addProject(newProject); // Add the new project to the linked list
         setProjects([...projectsList.getAllProjects()]); // Update the state to trigger a re-render
+    } 
+
+    const deleteProject = (projectId) =>{
+        projectsList.removeProject(projectId);
+        setProjects([...projectsList.getAllProjects()]);
     }
-    function deleteAllProjects() {  
+
+    const deleteAllProjects = () => { 
         projectsList.clear();
         setProjects([]); 
     }
 
-    function log (object)
-    {
-        console.log(object);
-    }
-
-    return(
+    return (
         <div className="list">
             <div className='Projects'>
                 <button id='newProject' onClick={addNewProject}>Naujas Projektas</button>
                 <button id='newProject1' onClick={deleteAllProjects}>Istrinti Projektus</button>
-            </div>
+            </div> 
             {(() => {
-            let current = projectsList.head; // Start from the head of the linked list
-            const elements = [];
-            while (current) {
-                elements.push(
-                    <div className="projectproperties">
-                        <div>
-                            <h1>{current.data.name}</h1>
-                            <ul>
-                                <li>Dalyviu skaicius: {current.data.participants}</li>
-                                <li>Terminas iki: {current.data.endDate}</li>
-                            </ul>
+                let current = projectsList.head; // Start from the head of the linked list
+                const elements = []; 
+                while (current != null) {  
+                    const temp = current; //storing the project into a variable so that when it is pressed we could return it
+                    elements.push(
+                        <div className="projectproperties" key={current.data.name}>
+                            <div>
+                                <h1>{current.data.name}</h1>
+                                <ul>
+                                    <li>Dalyviu skaicius: {current.data.participants}</li>
+                                    <li>Terminas iki: {current.data.endDate}</li>
+                                </ul>
+                            </div>
+                            <button 
+                                className="detailbutton"
+                                onClick={() => props.onProjectPress(temp.data)}>
+                                Detaliau
+                            </button>
+                            <button 
+                                className="detailbutton" 
+                                onClick={() => deleteProject(temp.projectId)}> 
+                                Užbaigti projektą
+                            </button>
                         </div>
-                        <button className="detailbutton" onClick={() => props.onProjectPress(current.data)}>Detaliau</button>
-                    </div>
-                );
-                current = current.next; // Move to the next node 
-            }
-            return elements;
+                    );  
+                    current = current.next; // Move to the next node
+                }
+                return elements;
             })()}
-        </div>
+        </div>      
     );
-};
-
-
-
+}
+ 
 export default ProjectList;
