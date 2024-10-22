@@ -18,7 +18,7 @@ const ProjectList = (props) => {
             projectsList.addProject(newProject); // Add initial project
             setProjects([...projectsList.getAllProjects()]); // Update state
         }
-    }, []);      
+    }, []);       
 
     const addNewProject = () => {
         const newProject = {
@@ -61,7 +61,7 @@ const ProjectList = (props) => {
                                     <li>Terminas iki: {current.data.endDate}</li>
                                 </ul>
                             </div>
-                            <button 
+                            <button  
                                 className="detailbutton"
                                 onClick={() => props.onProjectPress(temp.data)}>
                                 Detaliau

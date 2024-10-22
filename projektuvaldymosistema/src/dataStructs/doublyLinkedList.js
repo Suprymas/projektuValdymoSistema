@@ -40,11 +40,11 @@ export class DoublyLinkedList {
 	removeProject(projectId) {
         let current = this.head;
         while (current) {
-            if (current.project.id === projectId) {
+            if (current.data.projectId === projectId) { 
                 if (current === this.head && current === this.tail) {
                     // Only one item in the list
-                    this.head = null;
-                    this.tail = null;
+                    this.head = null; 
+                    this.tail = null; 
                 } else if (current === this.head) {
                     // Removing the head
 					this.head = this.head.next;
