@@ -5,7 +5,7 @@ class Node {
     }
 }
 
-class LinkedList {
+export class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
@@ -19,10 +19,13 @@ class LinkedList {
 
         // if list is Empty add the element and make it head
         if (this.head == null)
+        {
             this.head = node;
+            this.tail = node;
+        }
         else {
             this.tail.next = node;
-            tail = node;
+            this.tail = node;
         }
         this.size++;
     }

@@ -11,14 +11,14 @@ const ProjectList = (props) => {
         if (projectsList.length === 0) { // Only add the project if the list is empty
             const newProject = {
                 name: 'Kebabine',
-                participants: 4,
+                participants: 4, 
                 endDate: '2024-12-30',
                 projectId: 'Keb',
             }; 
             projectsList.addProject(newProject); // Add initial project
             setProjects([...projectsList.getAllProjects()]); // Update state
         }
-    }, []);       
+    }, []);        
 
     const addNewProject = () => {
         const newProject = {
@@ -53,7 +53,7 @@ const ProjectList = (props) => {
                 while (current != null) {  
                     const temp = current; //storing the project into a variable so that when it is pressed we could return it
                     elements.push(
-                        <div className="projectproperties" key={current.data.name}>
+                        <div className="projectproperties">
                             <div>
                                 <h1>{current.data.name}</h1>
                                 <ul>
@@ -65,10 +65,10 @@ const ProjectList = (props) => {
                                 className="detailbutton"
                                 onClick={() => props.onProjectPress(temp.data)}>
                                 Detaliau
-                            </button>
+                            </button> 
                             <button 
-                                className="detailbutton" 
-                                onClick={() => deleteProject(temp.projectId)}> 
+                                className="deletebutton" 
+                                onClick={() => deleteProject(temp.data.projectId)}>  
                                 Užbaigti projektą
                             </button>
                         </div>

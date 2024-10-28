@@ -1,0 +1,37 @@
+[
+    {
+      "name": "Petras",
+      "lastName": "Petrauskas",
+      "jobTitle": "UI dizaineris"
+    },
+    {
+        "name": "Antanas",
+        "lastName": "Antanauskas",
+        "jobTitle": "UX dizaineris"
+    },
+    {
+        "name": "Jonas",
+        "lastName": "Jonauskas",
+        "jobTitle": "SEO ekspertas"
+    },
+    {
+        "name": "Linas",
+        "lastName": "Linauskas",
+        "jobTitle": "Front-end programuotojas"
+    },
+    {
+        "name": "Kazys",
+        "lastName": "Kazlauskas",
+        "jobTitle": "Back-end programuotojas"
+    },
+    {
+        "name": "Agnė",
+        "lastName": "Agnevičienė",
+        "jobTitle": "Kibernetikos specialistė"
+    },
+    {
+        "name": "Matas",
+        "lastName": "Matauskas",
+        "jobTitle": "IT architektas"
+    }
+  ]

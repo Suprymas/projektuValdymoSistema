@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Serverių instaliavimas",
+        "endDate": "2024-12-30",
+        "numOfParticip": 3,
+        "participants": [
+            {
+                "name": "Kazys",
+                "lastName": "Kazlauskas",
+                "jobTitle": "Back-end programuotojas"
+            },
+            {
+                "name": "Agnė",
+                "lastName": "Agnevičienė",
+                "jobTitle": "Kibernetikos specialistė"
+            },
+            {
+                "name": "Matas",
+                "lastName": "Matauskas",
+                "jobTitle": "IT architektas"
+            }
+        ]
+    }
+
+]
