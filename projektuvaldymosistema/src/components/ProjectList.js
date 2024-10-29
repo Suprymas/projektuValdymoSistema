@@ -1,54 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { DoublyLinkedList } from "../dataStructs/doublyLinkedList";
+import React from "react";
 import './ProjectList.css';
+ 
 
 const ProjectList = (props) => {
-
-    const [projectsList, setProjectsList] = useState(new DoublyLinkedList());
-    const [projects, setProjects] = useState([]);
-
-    useEffect(() => {
-        if (projectsList.length === 0) { // Only add the project if the list is empty
-            const newProject = {
-                name: 'Kebabine',
-                participants: 4, 
-                endDate: '2024-12-30',
-                projectId: 'Keb',
-            }; 
-            projectsList.addProject(newProject); // Add initial project
-            setProjects([...projectsList.getAllProjects()]); // Update state
-        }
-    }, []);        
-
-    const addNewProject = () => {
-        const newProject = {
-            name: 'Kebabine',
-            participants: 4,
-            endDate: '2024-12-30',
-            projectId: 'Keb',
-        };
-        projectsList.addProject(newProject); // Add the new project to the linked list
-        setProjects([...projectsList.getAllProjects()]); // Update the state to trigger a re-render
-    } 
-
-    const deleteProject = (projectId) =>{
-        projectsList.removeProject(projectId);
-        setProjects([...projectsList.getAllProjects()]);
-    }
-
-    const deleteAllProjects = () => { 
-        projectsList.clear();
-        setProjects([]); 
-    }
-
-    return (
+    return (  
         <div className="list">
             <div className='Projects'>
-                <button id='newProject' onClick={addNewProject}>Naujas Projektas</button>
-                <button id='newProject1' onClick={deleteAllProjects}>Istrinti Projektus</button>
+                <button id='newProject' onClick={props.addNewProject}>Naujas Projektas</button>
+                <button id='newProject1' onClick={props.delete}>Istrinti Projektus</button>
             </div> 
             {(() => {
-                let current = projectsList.head; // Start from the head of the linked list
+                let current = props.projects.head; // Start from the head of the linked list
                 const elements = []; 
                 while (current != null) {  
                     const temp = current; //storing the project into a variable so that when it is pressed we could return it
@@ -57,20 +19,20 @@ const ProjectList = (props) => {
                             <div>
                                 <h1>{current.data.name}</h1>
                                 <ul>
-                                    <li>Dalyviu skaicius: {current.data.participants}</li>
+                                    <li>Dalyviu skaicius: {current.data.numOfParticip}</li>
                                     <li>Terminas iki: {current.data.endDate}</li>
-                                </ul>
-                            </div>
+                                </ul> 
+                            </div>   
                             <button  
                                 className="detailbutton"
                                 onClick={() => props.onProjectPress(temp.data)}>
                                 Detaliau
-                            </button> 
+                            </button>  
                             <button 
                                 className="deletebutton" 
-                                onClick={() => deleteProject(temp.data.projectId)}>  
+                                onClick={() => props.deleteProject(temp.data.id)}>  
                                 Užbaigti projektą
-                            </button>
+                            </button> 
                         </div>
                     );  
                     current = current.next; // Move to the next node

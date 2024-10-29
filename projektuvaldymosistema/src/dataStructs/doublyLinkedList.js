@@ -19,12 +19,12 @@ export class DoublyLinkedList {
 		if (this.head == null) return true;
 		return false;
 	}
-
+ 
 	// Method to add item at the last of doubly linked list
 	addProject(project) {
 		
 		let temp = new Node(project);
-
+           
 		if (this.head == null) {
 			this.head = temp;
 			this.tail = temp;
@@ -37,10 +37,11 @@ export class DoublyLinkedList {
 		}
 	}
 
-	removeProject(projectId) {
+	removeProject(projectId) { 
         let current = this.head;
-        while (current) {
-            if (current.data.projectId === projectId) { 
+        
+        while (current) { 
+            if (current.data.id === projectId) {
                 if (current === this.head && current === this.tail) {
                     // Only one item in the list
                     this.head = null; 

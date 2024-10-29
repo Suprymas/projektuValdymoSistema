@@ -1,5 +1,6 @@
 [
     {
+        "id": "Serv1230",
         "name": "Serverių instaliavimas",
         "endDate": "2024-12-30",
         "numOfParticip": 3,
@@ -20,6 +21,143 @@
                 "jobTitle": "IT architektas"
             }
         ]
+    },
+    {
+        "id": "E-ko1115",
+        "name": "E-komercijos svetainės kūrimas",
+        "endDate": "2024-11-15",
+        "numOfParticip": 4,
+        "participants": [
+            {
+                "name": "Linas",
+                "lastName": "Linauskas",
+                "jobTitle": "Front-end programuotojas"
+            },
+            {
+                "name": "Kazys",
+                "lastName": "Kazlauskas",
+                "jobTitle": "Back-end programuotojas"
+            },
+            {
+                "name": "Antanas",
+                "lastName": "Antanauskas",
+                "jobTitle": "UX dizaineris"
+            },
+            {
+                "name": "Petras",
+                "lastName": "Petrauskas",
+                "jobTitle": "UI dizaineris"
+            }
+        ]
+    },
+    {
+        "id": "SEOe0120",
+        "name": "SEO ir rinkodaros strategija",
+        "endDate": "2025-01-20",
+        "numOfParticip": 2,
+        "participants": [
+            {
+                "name": "Jonas",
+                "lastName": "Jonauskas",
+                "jobTitle": "SEO ekspertas"
+            },
+            {
+                "name": "Antanas",
+                "lastName": "Antanauskas",
+                "jobTitle": "UX dizaineris"
+            }
+        ]
+    },
+    {
+        "id": "Mobi0310",
+        "name": "Mobilios aplikacijos kūrimas",
+        "endDate": "2025-03-10",
+        "numOfParticip": 4,
+        "participants": [
+            {
+                "name": "Linas",
+                "lastName": "Linauskas",
+                "jobTitle": "Front-end programuotojas"
+            },
+            {
+                "name": "Kazys",
+                "lastName": "Kazlauskas",
+                "jobTitle": "Back-end programuotojas"
+            },
+            {
+                "name": "Petras",
+                "lastName": "Petrauskas",
+                "jobTitle": "UI dizaineris"
+            },
+            {
+                "name": "Antanas",
+                "lastName": "Antanauskas",
+                "jobTitle": "UX dizaineris"
+            }
+        ]
+    },
+    {
+        "id": "Vidi0630",
+        "name": "Vidinės saugumo sistemos",
+        "endDate": "2025-06-30",
+        "numOfParticip": 3,
+        "participants": [
+            {
+                "name": "Agnė",
+                "lastName": "Agnevičienė",
+                "jobTitle": "Kibernetikos specialistė"
+            },
+            {
+                "name": "Matas",
+                "lastName": "Matauskas",
+                "jobTitle": "IT architektas"
+            },
+            {
+                "name": "Jonas",
+                "lastName": "Jonauskas",
+                "jobTitle": "SEO ekspertas"
+            }
+        ]
+    },
+    {
+        "id": "Vers0415",
+        "name": "Verslo analizės įrankis",
+        "endDate": "2025-04-15",
+        "numOfParticip": 2,
+        "participants": [
+            {
+                "name": "Kazys",
+                "lastName": "Kazlauskas",
+                "jobTitle": "Back-end programuotojas"
+            },
+            {
+                "name": "Matas",
+                "lastName": "Matauskas",
+                "jobTitle": "IT architektas"
+            }
+        ]
+    },
+    {
+        "id": "Klie0710",
+        "name": "Kliento valdymo sistema (CRM)",
+        "endDate": "2025-07-10",
+        "numOfParticip": 3,
+        "participants": [
+            {
+                "name": "Linas",
+                "lastName": "Linauskas",
+                "jobTitle": "Front-end programuotojas"
+            },
+            {
+                "name": "Antanas",
+                "lastName": "Antanauskas",
+                "jobTitle": "UX dizaineris"
+            },
+            {
+                "name": "Petras",
+                "lastName": "Petrauskas",
+                "jobTitle": "UI dizaineris"
+            }
+        ]
     }
-
 ]
