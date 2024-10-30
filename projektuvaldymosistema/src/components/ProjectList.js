@@ -25,7 +25,7 @@ const ProjectList = (props) => {
                             </div>   
                             <button  
                                 className="detailbutton"
-                                onClick={() => props.onProjectPress(temp.data)}>
+                                onClick={() => props.onProjectPress(temp.data.id)}>
                                 Detaliau
                             </button>  
                             <button 

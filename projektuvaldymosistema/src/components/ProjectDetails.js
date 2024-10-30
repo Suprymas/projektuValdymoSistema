@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from "react";
 import './ProjectDetails.css';
 
-const ProjectDetails = () =>{
+const ProjectDetails = (props) =>{
     return(
         <div className="alldetails">
-            <h1>PAVADINIMAS</h1>
-        </div>
+            {props.selectedProj == null ? (
+                <div className="alldetails">
+                    <h1>Pasirinkite projektą</h1>
+                </div>
+            ) : (
+                <div className="alldetails">
+                    <h1>{props.selectedProj}</h1>
+                </div>
+            )}
+        </div> 
     );
 }
 

@@ -10,31 +10,26 @@ import projectsJson from "./jsonfiles/projects.json";
 function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [projectsList, setProjectsList] = useState(new DoublyLinkedList());
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]); 
+  useEffect(() => {
+    for(let i = 0; i < projectsJson.length ; i++)
+    { 
+      projectsList.addProject(projectsJson[i]);  
+      console.log(i);  
+    }  
+    setProjects([projectsList.getAllProjects()]); // Update state
+  }, []);  
 
-
+  
   const handleProjectPress = (project) => {
     setSelectedProject(project);  // Update the state with the pressed project
   };
   const workers = new LinkedList;
-  for(let i = 0; i < workerData.length; i++)
+  for(let i = 0; i < workerData.length; i++)  
   {
     workers.add(workerData[i]);
-  }
-  
- 
-
-
-
-
-
-  useEffect(() => {
-      for(let i = 0; i < projectsJson.length; i++)
-      { 
-          projectsList.addProject(projectsJson[i]);  
-      }  
-      setProjects([...projectsList.getAllProjects()]); // Update state
-  }, []);       
+  } 
+          
   
   const addNewProject = () => {
       const newProject = {
@@ -63,7 +58,7 @@ function App() {
         <header className="App-header">
           <div className='ProjectName'>
             <strong>Projektu Valdymo Sistema</strong>
-          </div>
+          </div> 
         </header>
         <div className='allProjects'>
           <ProjectList projects={projectsList} 
@@ -71,10 +66,9 @@ function App() {
           delete={deleteAllProjects} 
           onProjectPress={handleProjectPress}
           deleteProject={deleteProject}
-          
           />
-          <ProjectDetails />
-        </div>
+          <ProjectDetails selectedProj={selectedProject} projects={projectsList}/>  
+        </div>  
       </body>
     </div>
   );
