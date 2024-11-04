@@ -13,15 +13,18 @@
                 "tasks": [
                     {
                         "task": "Serverio duomenų bazės paruošimas",
-                        "deadline": "2024-10-15"
+                        "deadline": "2024-10-15",
+                        "finished": false
                     },
                     {
                         "task": "API ryšio konfigūravimas",
-                        "deadline": "2024-11-01"
+                        "deadline": "2024-11-01",
+                        "finished": false
                     },
                     {
                         "task": "Serverio priežiūros testavimas",
-                        "deadline": "2024-12-10"
+                        "deadline": "2024-12-10",
+                        "finished": false
                     }
                 ]
             },
@@ -33,15 +36,18 @@
                 "tasks": [
                     {
                         "task": "Saugumo konfigūravimo įdiegimas",
-                        "deadline": "2024-10-20"
+                        "deadline": "2024-10-20",
+                        "finished": false
                     },
                     {
                         "task": "Prieigos kontrolės nustatymai",
-                        "deadline": "2024-11-10"
+                        "deadline": "2024-11-10",
+                        "finished": false
                     },
                     {
                         "task": "Įsilaužimų aptikimo testai",
-                        "deadline": "2024-12-05"
+                        "deadline": "2024-12-05",
+                        "finished": false
                     }
                 ]
             },
@@ -53,15 +59,18 @@
                 "tasks": [
                     {
                         "task": "Serverio struktūros planavimas",
-                        "deadline": "2024-10-25"
+                        "deadline": "2024-10-25",
+                        "finished": false
                     },
                     {
                         "task": "Sistemų sąveikos analizė",
-                        "deadline": "2024-11-15"
+                        "deadline": "2024-11-15",
+                        "finished": false
                     }
                 ]
             }
-        ]
+        ],
+        "description": "Projektas skirtas organizacijos serverių sistemų diegimui ir konfigūravimui. Komanda užtikrins, kad visi serveriai veiktų efektyviai ir patikimai. Bus kuriama integracija su esamomis IT sistemomis."
     },
     {
         "id": "E-ko1115",
@@ -77,15 +86,18 @@
                 "tasks": [
                     {
                         "task": "Pradinis svetainės dizainas",
-                        "deadline": "2024-09-30"
+                        "deadline": "2024-09-30",
+                        "finished": false
                     },
                     {
                         "task": "Navigacijos sistemos kūrimas",
-                        "deadline": "2024-10-15"
+                        "deadline": "2024-10-15",
+                        "finished": false
                     },
                     {
                         "task": "Prisitaikančio dizaino pritaikymas",
-                        "deadline": "2024-10-30"
+                        "deadline": "2024-10-30",
+                        "finished": false
                     }
                 ]
             },
@@ -97,11 +109,13 @@
                 "tasks": [
                     {
                         "task": "Produkto duomenų bazės kūrimas",
-                        "deadline": "2024-09-25"
+                        "deadline": "2024-09-25",
+                        "finished": false
                     },
                     {
                         "task": "Mokėjimų integracijos testavimas",
-                        "deadline": "2024-10-10"
+                        "deadline": "2024-10-10",
+                        "finished": false
                     }
                 ]
             },
@@ -113,11 +127,13 @@
                 "tasks": [
                     {
                         "task": "Vartotojo kelionės planavimas",
-                        "deadline": "2024-10-05"
+                        "deadline": "2024-10-05",
+                        "finished": false
                     },
                     {
                         "task": "Testavimas su naudotojais",
-                        "deadline": "2024-10-20"
+                        "deadline": "2024-10-20",
+                        "finished": false
                     }
                 ]
             },
@@ -129,19 +145,23 @@
                 "tasks": [
                     {
                         "task": "Pagrindinio puslapio dizainas",
-                        "deadline": "2024-09-15"
+                        "deadline": "2024-09-15",
+                        "finished": false
                     },
                     {
                         "task": "Produktų katalogo dizainas",
-                        "deadline": "2024-10-01"
+                        "deadline": "2024-10-01",
+                        "finished": false
                     },
                     {
                         "task": "Mobilios versijos dizainas",
-                        "deadline": "2024-10-15"
+                        "deadline": "2024-10-15",
+                        "finished": false
                     }
                 ]
             }
-        ]
+        ],
+        "description": "Kuriama moderni e-komercijos svetainė su patogia vartotojo sąsaja ir optimizuotu pirkinių krepšeliu. Projektas apima front-end ir back-end programavimą bei UX/UI dizaino kūrimą."
     },
     {
         "id": "SEOe0120",
@@ -157,15 +177,18 @@
                 "tasks": [
                     {
                         "task": "Raktažodžių analizė",
-                        "deadline": "2024-11-10"
+                        "deadline": "2024-11-10",
+                        "finished": false
                     },
                     {
                         "task": "Meta duomenų optimizavimas",
-                        "deadline": "2024-11-20"
+                        "deadline": "2024-11-20",
+                        "finished": false
                     },
                     {
                         "task": "SEO ataskaitų rengimas",
-                        "deadline": "2024-12-05"
+                        "deadline": "2024-12-05",
+                        "finished": false
                     }
                 ]
             },
@@ -177,14 +200,17 @@
                 "tasks": [
                     {
                         "task": "Vartotojų elgsenos tyrimai",
-                        "deadline": "2024-11-15"
+                        "deadline": "2024-11-15",
+                        "finished": false
                     },
                     {
                         "task": "SEO rekomendacijų testavimas",
-                        "deadline": "2024-12-01"
+                        "deadline": "2024-12-01",
+                        "finished": false
                     }
                 ]
             }
-        ]
+        ],
+        "description": "Projekte bus vystoma SEO strategija siekiant pagerinti svetainės matomumą paieškos sistemose. Projektas apims ir UX patobulinimus pagal SEO reikalavimus."
     }
 ]

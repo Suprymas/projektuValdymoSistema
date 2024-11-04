@@ -12,17 +12,40 @@ function App() {
   const [projectsList, setProjectsList] = useState(new DoublyLinkedList());
   const [projects, setProjects] = useState([]); 
   const [displWorkers, setDisplWorkers] = useState(null);
+  const [workers, setWorkers] = useState(new LinkedList());
   
   useEffect(() => {
+
+    for(let i = 0; i < workerData.length; i++)   
+      {
+        let temp = {
+          name: workerData[i].name,
+          lastName: workerData[i].lastName,
+          job: workerData[i].jobTitle,
+          tasks: []
+        }
+        workers.add(temp); 
+      } 
+
     for(let i = 0; i < projectsJson.length ; i++)
     { 
       projectsJson[i].participantsList = new LinkedList();
       for (let j = 0; j < projectsJson[i].numOfParticip; j++)
       {
+
+        let current = workers.head;
+        while(current.data.name !== projectsJson[i].participants[j].name)
+        {
+          current = current.next;
+        }
+
+
         let tasks = new DoublyLinkedList();
         for (let y = 0; y < projectsJson[i].participants[j].numOfTasks; y++)
         {
-          tasks.addProject(projectsJson[i].participants[j].tasks[y]);
+          tasks.addProject(projectsJson[i].participants[j].tasks[y]); 
+          current.data.tasks.push(projectsJson[i].participants[j].tasks[y]);
+
         }
         let participProperties = { 
           allTasks: tasks,
@@ -30,21 +53,17 @@ function App() {
         }
         projectsJson[i].participantsList.add(participProperties);
       }
-      projectsList.addProject(projectsJson[i]);   
+      projectsList.addProject(projectsJson[i]);
+      console.log(projectsJson[i]);  
     }  
     setProjects([projectsList.getAllProjects()]); // Update state
   }, []);  
 
-  
   const handleProjectPress = (project) => {
     setSelectedProject(project);  // Update the state with the pressed  project
     setDisplWorkers(null);
   };
-  const workers = new LinkedList();
-  for(let i = 0; i < workerData.length; i++)   
-  {
-    workers.add(workerData[i]);
-  } 
+
           
   
   const addNewProject = () => {
@@ -71,6 +90,9 @@ function App() {
   const handleWorkers = () =>{
     setDisplWorkers(true);
   }
+ 
+
+
   return ( 
     <div className="App">
        <body>

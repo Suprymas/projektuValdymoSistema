@@ -23,3 +23,25 @@
 .descript{
     margin: 20px 0px;
 }
+
+.workerName{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.workerField{
+    margin-bottom: 40px;
+}
+
+.task{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+button{
+    margin: 0px 10px;
+}
+
+.unfinished-task{
+    color: red;
+}
