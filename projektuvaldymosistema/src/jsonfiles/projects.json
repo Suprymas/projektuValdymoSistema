@@ -8,17 +8,58 @@
             {
                 "name": "Kazys",
                 "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas"
+                "jobTitle": "Back-end programuotojas",
+                "numOfTasks": 3,
+                "tasks": [
+                    {
+                        "task": "Serverio duomenų bazės paruošimas",
+                        "deadline": "2024-10-15"
+                    },
+                    {
+                        "task": "API ryšio konfigūravimas",
+                        "deadline": "2024-11-01"
+                    },
+                    {
+                        "task": "Serverio priežiūros testavimas",
+                        "deadline": "2024-12-10"
+                    }
+                ]
             },
             {
                 "name": "Agnė",
                 "lastName": "Agnevičienė",
-                "jobTitle": "Kibernetikos specialistė"
+                "jobTitle": "Kibernetikos specialistė",
+                "numOfTasks": 3,
+                "tasks": [
+                    {
+                        "task": "Saugumo konfigūravimo įdiegimas",
+                        "deadline": "2024-10-20"
+                    },
+                    {
+                        "task": "Prieigos kontrolės nustatymai",
+                        "deadline": "2024-11-10"
+                    },
+                    {
+                        "task": "Įsilaužimų aptikimo testai",
+                        "deadline": "2024-12-05"
+                    }
+                ]
             },
             {
                 "name": "Matas",
                 "lastName": "Matauskas",
-                "jobTitle": "IT architektas"
+                "jobTitle": "IT architektas",
+                "numOfTasks": 2,
+                "tasks": [
+                    {
+                        "task": "Serverio struktūros planavimas",
+                        "deadline": "2024-10-25"
+                    },
+                    {
+                        "task": "Sistemų sąveikos analizė",
+                        "deadline": "2024-11-15"
+                    }
+                ]
             }
         ]
     },
@@ -31,22 +72,74 @@
             {
                 "name": "Linas",
                 "lastName": "Linauskas",
-                "jobTitle": "Front-end programuotojas"
+                "jobTitle": "Front-end programuotojas",
+                "numOfTasks": 3,
+                "tasks": [
+                    {
+                        "task": "Pradinis svetainės dizainas",
+                        "deadline": "2024-09-30"
+                    },
+                    {
+                        "task": "Navigacijos sistemos kūrimas",
+                        "deadline": "2024-10-15"
+                    },
+                    {
+                        "task": "Prisitaikančio dizaino pritaikymas",
+                        "deadline": "2024-10-30"
+                    }
+                ]
             },
             {
                 "name": "Kazys",
                 "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas"
+                "jobTitle": "Back-end programuotojas",
+                "numOfTasks": 2,
+                "tasks": [
+                    {
+                        "task": "Produkto duomenų bazės kūrimas",
+                        "deadline": "2024-09-25"
+                    },
+                    {
+                        "task": "Mokėjimų integracijos testavimas",
+                        "deadline": "2024-10-10"
+                    }
+                ]
             },
             {
                 "name": "Antanas",
                 "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris"
+                "jobTitle": "UX dizaineris",
+                "numOfTasks": 2,
+                "tasks": [
+                    {
+                        "task": "Vartotojo kelionės planavimas",
+                        "deadline": "2024-10-05"
+                    },
+                    {
+                        "task": "Testavimas su naudotojais",
+                        "deadline": "2024-10-20"
+                    }
+                ]
             },
             {
                 "name": "Petras",
                 "lastName": "Petrauskas",
-                "jobTitle": "UI dizaineris"
+                "jobTitle": "UI dizaineris",
+                "numOfTasks": 3,
+                "tasks": [
+                    {
+                        "task": "Pagrindinio puslapio dizainas",
+                        "deadline": "2024-09-15"
+                    },
+                    {
+                        "task": "Produktų katalogo dizainas",
+                        "deadline": "2024-10-01"
+                    },
+                    {
+                        "task": "Mobilios versijos dizainas",
+                        "deadline": "2024-10-15"
+                    }
+                ]
             }
         ]
     },
@@ -59,104 +152,38 @@
             {
                 "name": "Jonas",
                 "lastName": "Jonauskas",
-                "jobTitle": "SEO ekspertas"
+                "jobTitle": "SEO ekspertas",
+                "numOfTasks": 3,
+                "tasks": [
+                    {
+                        "task": "Raktažodžių analizė",
+                        "deadline": "2024-11-10"
+                    },
+                    {
+                        "task": "Meta duomenų optimizavimas",
+                        "deadline": "2024-11-20"
+                    },
+                    {
+                        "task": "SEO ataskaitų rengimas",
+                        "deadline": "2024-12-05"
+                    }
+                ]
             },
             {
                 "name": "Antanas",
                 "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris"
-            }
-        ]
-    },
-    {
-        "id": "Mobi0310",
-        "name": "Mobilios aplikacijos kūrimas",
-        "endDate": "2025-03-10",
-        "numOfParticip": 4,
-        "participants": [
-            {
-                "name": "Linas",
-                "lastName": "Linauskas",
-                "jobTitle": "Front-end programuotojas"
-            },
-            {
-                "name": "Kazys",
-                "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas"
-            },
-            {
-                "name": "Petras",
-                "lastName": "Petrauskas",
-                "jobTitle": "UI dizaineris"
-            },
-            {
-                "name": "Antanas",
-                "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris"
-            }
-        ]
-    },
-    {
-        "id": "Vidi0630",
-        "name": "Vidinės saugumo sistemos",
-        "endDate": "2025-06-30",
-        "numOfParticip": 3,
-        "participants": [
-            {
-                "name": "Agnė",
-                "lastName": "Agnevičienė",
-                "jobTitle": "Kibernetikos specialistė"
-            },
-            {
-                "name": "Matas",
-                "lastName": "Matauskas",
-                "jobTitle": "IT architektas"
-            },
-            {
-                "name": "Jonas",
-                "lastName": "Jonauskas",
-                "jobTitle": "SEO ekspertas"
-            }
-        ]
-    },
-    {
-        "id": "Vers0415",
-        "name": "Verslo analizės įrankis",
-        "endDate": "2025-04-15",
-        "numOfParticip": 2,
-        "participants": [
-            {
-                "name": "Kazys",
-                "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas"
-            },
-            {
-                "name": "Matas",
-                "lastName": "Matauskas",
-                "jobTitle": "IT architektas"
-            }
-        ]
-    },
-    {
-        "id": "Klie0710",
-        "name": "Kliento valdymo sistema (CRM)",
-        "endDate": "2025-07-10",
-        "numOfParticip": 3,
-        "participants": [
-            {
-                "name": "Linas",
-                "lastName": "Linauskas",
-                "jobTitle": "Front-end programuotojas"
-            },
-            {
-                "name": "Antanas",
-                "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris"
-            },
-            {
-                "name": "Petras",
-                "lastName": "Petrauskas",
-                "jobTitle": "UI dizaineris"
+                "jobTitle": "UX dizaineris",
+                "numOfTasks": 2,
+                "tasks": [
+                    {
+                        "task": "Vartotojų elgsenos tyrimai",
+                        "deadline": "2024-11-15"
+                    },
+                    {
+                        "task": "SEO rekomendacijų testavimas",
+                        "deadline": "2024-12-01"
+                    }
+                ]
             }
         ]
     }

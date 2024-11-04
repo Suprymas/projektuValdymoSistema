@@ -11,21 +11,37 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [projectsList, setProjectsList] = useState(new DoublyLinkedList());
   const [projects, setProjects] = useState([]); 
+  const [displWorkers, setDisplWorkers] = useState(null);
+  
   useEffect(() => {
     for(let i = 0; i < projectsJson.length ; i++)
     { 
-      projectsList.addProject(projectsJson[i]);  
-      console.log(i);  
+      projectsJson[i].participantsList = new LinkedList();
+      for (let j = 0; j < projectsJson[i].numOfParticip; j++)
+      {
+        let tasks = new DoublyLinkedList();
+        for (let y = 0; y < projectsJson[i].participants[j].numOfTasks; y++)
+        {
+          tasks.addProject(projectsJson[i].participants[j].tasks[y]);
+        }
+        let participProperties = { 
+          allTasks: tasks,
+          nameOfPart: projectsJson[i].participants[j],
+        }
+        projectsJson[i].participantsList.add(participProperties);
+      }
+      projectsList.addProject(projectsJson[i]);   
     }  
     setProjects([projectsList.getAllProjects()]); // Update state
   }, []);  
 
   
   const handleProjectPress = (project) => {
-    setSelectedProject(project);  // Update the state with the pressed project
+    setSelectedProject(project);  // Update the state with the pressed  project
+    setDisplWorkers(null);
   };
-  const workers = new LinkedList;
-  for(let i = 0; i < workerData.length; i++)  
+  const workers = new LinkedList();
+  for(let i = 0; i < workerData.length; i++)   
   {
     workers.add(workerData[i]);
   } 
@@ -52,6 +68,9 @@ function App() {
       setProjects([]); 
   } 
 
+  const handleWorkers = () =>{
+    setDisplWorkers(true);
+  }
   return ( 
     <div className="App">
        <body>
@@ -66,12 +85,16 @@ function App() {
           delete={deleteAllProjects} 
           onProjectPress={handleProjectPress}
           deleteProject={deleteProject}
+          workers={handleWorkers}
           />
-          <ProjectDetails selectedProj={selectedProject} projects={projectsList}/>  
+          <ProjectDetails selectedProj={selectedProject} 
+          projects={projectsList} 
+          workersDispl={displWorkers} 
+          workers={workers}/>  
         </div>  
       </body>
     </div>
   );
 }
-
+ 
 export default App;

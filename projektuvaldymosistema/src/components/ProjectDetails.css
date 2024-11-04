@@ -1,6 +1,25 @@
-.alldetails{
+.screen{
     background-color: white;
     padding: 20px;
     margin: 30px;
     flex: 4;
+}
+
+.alldetails{
+    text-align: center;
+}
+
+.projectName {
+    font-size: 30px;
+    margin: 0;
+
+}
+
+.endDate{
+    font-size: 25px;
+    margin: 5px 0px;
+    color: red;
+}
+.descript{
+    margin: 20px 0px;
 }
