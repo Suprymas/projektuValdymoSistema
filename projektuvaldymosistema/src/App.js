@@ -54,7 +54,6 @@ function App() {
         projectsJson[i].participantsList.add(participProperties);
       }
       projectsList.addProject(projectsJson[i]);
-      console.log(projectsJson[i]);  
     }  
     setProjects([projectsList.getAllProjects()]); // Update state
   }, []);  
@@ -90,7 +89,7 @@ function App() {
   const handleWorkers = () =>{
     setDisplWorkers(true);
   }
- 
+
 
 
   return ( 
@@ -112,7 +111,8 @@ function App() {
           <ProjectDetails selectedProj={selectedProject} 
           projects={projectsList} 
           workersDispl={displWorkers} 
-          workers={workers}/>  
+          workers={workers}
+          />  
         </div>  
       </body>
     </div>

@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import './ProjectDetails.css';
 
 const ProjectDetails = (props) =>{
+    const [renderTrigger, setRenderTrigger] = useState(false);
+
+    const triggerReRender = () => {
+        setRenderTrigger(!renderTrigger);
+    };
+
+    
 
 
     const exportWorkerReport = (worker) => {
@@ -32,6 +39,41 @@ const ProjectDetails = (props) =>{
         } 
     }  
 
+    const finishTask = (taskName, worker) =>{
+
+
+        let temp = current; 
+        if (temp.data.participantsList.head.data.nameOfPart.name !== worker)
+        {
+            temp = temp.data.participantsList.head.next;
+            while (temp.data.nameOfPart.name !== worker)
+            {
+                temp = temp.next;
+            }
+            temp = temp.data.allTasks.head;
+            while (temp.data.task !== taskName)
+            {
+                temp = temp.next;
+            }
+            temp.data.finished = true;
+            triggerReRender();
+
+        }
+        else {
+
+            temp = temp.data.participantsList.head.data.allTasks.head;
+            while (temp.data.task !== taskName)
+            {
+                temp = temp.next;
+            }
+            temp.data.finished = true;
+            triggerReRender();
+        }
+        
+
+
+    };
+
     if (props.workersDispl === true)
     {
         let current = props.workers.head; // Start from the head of the linked list
@@ -46,7 +88,7 @@ const ProjectDetails = (props) =>{
                         </button>  
                 </div>
             );
-            console.log(current);  
+
             current = current.next; // Move to the next node
             
         }
@@ -72,20 +114,58 @@ const ProjectDetails = (props) =>{
     else {
         let curr = current.data.participantsList.head;
         const work = [];
+        const today = new Date();
+
+        let late = 0, weekLeft = 0, dayLeft = 0, numTask = 0, notFinished = 0;
 
         while(curr != null)
         {
             const task = [];
             let curTask = curr.data.allTasks.head;
+            const worker = curr.data.nameOfPart.name;
+            
             while(curTask != null)
             {
+                const taskName = curTask.data.task;
+
+                const deadlineDate = new Date(curTask.data.deadline);
+                const timeDifference = (deadlineDate - today) / (1000 * 60 * 60 * 24);
+                let week = 0, day = 0, lat = 0;
+                numTask += 1;
+                if(timeDifference > 7 && curTask.data.finished === false)
+                {notFinished += 1;}
+                else if(timeDifference > 1 && curTask.data.finished === false)
+                {
+                    weekLeft += 1;
+                    notFinished += 1;
+                    week = 1;
+                } else if (timeDifference > 0 && curTask.data.finished === false){
+                    dayLeft += 1;
+                    day = 1;
+                    notFinished += 1;
+                } else if(curTask.data.finished === false){
+                    late += 1;
+                    lat = 1;
+                    notFinished += 1;
+                }
+                
                 task.push(
                     <div className="task">
-                        <li className={curTask.data.isFinished ? "" : "unfinished-task"}>{curTask.data.task} Terminas iki: {curTask.data.deadline}</li>
-                        <button>Užbaigti užduotį</button>
+                        <li className={
+                            curTask.data.finished ? "finished-task" :
+                            week === 1 ? "weekleft-task" :
+                            day === 1 ? "dayleft-task" : 
+                            lat === 1 ? "late-task":
+                            ""
+                            }>
+                                {curTask.data.finished 
+                                ? curTask.data.task 
+                                : `${curTask.data.task} Terminas iki: ${curTask.data.deadline}`}
+                                </li>
+                        {curTask.data.finished ? "": <button onClick={() => finishTask(taskName, worker)}>Užbaigti užduotį</button>}
                     </div>
                 )
-                curTask = curTask.next; 
+                curTask = curTask.next;
             }
 
             work.push(
@@ -113,8 +193,16 @@ const ProjectDetails = (props) =>{
                 <div className="descript">
                     {work}
                 </div>
+                <div>
+                    <h3>Skubios užduotys(liko mažiau nei savaitė): {weekLeft}</h3>
+                    <h3>Itin skubios(liko viena diena): {dayLeft}</h3>
+                    <h3>Vėluojančios užduotys: {late}</h3>
+                    <h3>Užduočių yra: {numTask}</h3>
+                    <h2>Nebaigtų užduočių yra: {notFinished}</h2>
+                </div>
             </div>
         );
+        
     }
 }
 

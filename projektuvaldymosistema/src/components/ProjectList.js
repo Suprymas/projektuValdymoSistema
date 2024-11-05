@@ -8,7 +8,6 @@ const ProjectList = (props) => {
             <div className='Buttons'>
                 <div>
                     <button id='newProject' onClick={props.addNewProject}>Naujas Projektas</button>
-                    <button id='newProject1' onClick={props.delete}>Istrinti Projektus</button>
                 </div>
                 <button id='newProject1' onClick={props.workers}>Darbuotojai</button> 
             </div> 
@@ -22,7 +21,7 @@ const ProjectList = (props) => {
                             <div>
                                 <h1>{current.data.name}</h1>
                                 <ul>
-                                    <li>Dalyviu skaicius: {current.data.numOfParticip}</li>
+                                    <li>Dalyvių skaičius: {current.data.numOfParticip}</li>
                                     <li>Terminas iki: {current.data.endDate}</li>
                                 </ul> 
                             </div>   

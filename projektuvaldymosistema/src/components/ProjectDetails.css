@@ -3,6 +3,8 @@
     padding: 20px;
     margin: 30px;
     flex: 4;
+    height: max-content;
+    margin-bottom: 10px;
 }
 
 .alldetails{
@@ -42,6 +44,21 @@ button{
     margin: 0px 10px;
 }
 
-.unfinished-task{
+.weekleft-task{
     color: red;
+}
+
+.dayleft-task{
+    color: red;
+    font-weight: 200;
+}
+
+.late-task{
+    color: red;
+    font-weight: 1000;
+}
+
+.finished-task{
+    color: green;
+    font-weight: 800;
 }
