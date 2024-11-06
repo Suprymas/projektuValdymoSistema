@@ -23,7 +23,7 @@
     color: red;
 }
 .descript{
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 .workerName{
@@ -61,4 +61,32 @@ button{
 .finished-task{
     color: green;
     font-weight: 800;
+}
+
+.enterName{
+    margin-bottom: 10px;
+}
+
+.optionWorker:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+.selected{
+    display: inline;
+}
+
+
+.create{
+    display: flex;           /* Set the container to use flexbox */
+    justify-content: center;
+}
+.dateChange{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 0px;
+}
+
+.changedate{
+    width: 200px;
 }

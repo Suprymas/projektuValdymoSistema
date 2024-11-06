@@ -7,7 +7,7 @@ const ProjectList = (props) => {
         <div className="list">
             <div className='Buttons'>
                 <div>
-                    <button id='newProject' onClick={props.addNewProject}>Naujas Projektas</button>
+                    <button id='newProject' onClick={props.createProj}>Naujas Projektas</button>
                 </div>
                 <button id='newProject1' onClick={props.workers}>Darbuotojai</button> 
             </div> 

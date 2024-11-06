@@ -12,6 +12,7 @@ function App() {
   const [projectsList, setProjectsList] = useState(new DoublyLinkedList());
   const [projects, setProjects] = useState([]); 
   const [displWorkers, setDisplWorkers] = useState(null);
+  const [createProject, setCreateProject] = useState(null);
   const [workers, setWorkers] = useState(new LinkedList());
   
   useEffect(() => {
@@ -57,24 +58,14 @@ function App() {
     }  
     setProjects([projectsList.getAllProjects()]); // Update state
   }, []);  
+  console.log(projectsList);
 
   const handleProjectPress = (project) => {
     setSelectedProject(project);  // Update the state with the pressed  project
     setDisplWorkers(null);
+    setCreateProject(null);
   };
 
-          
-  
-  const addNewProject = () => {
-      const newProject = {
-          name: 'Kebabine',
-          participants: 4,
-          endDate: '2024-12-30',
-          projectId: 'Keb', 
-      };
-      projectsList.addProject(newProject); // Add the new project to the linked list
-      setProjects([...projectsList.getAllProjects()]); // Update the state to trigger a re-render
-  } 
 
   const deleteProject = (projectId) =>{
       projectsList.removeProject(projectId);
@@ -88,8 +79,60 @@ function App() {
 
   const handleWorkers = () =>{
     setDisplWorkers(true);
+  } 
+
+  const newProject = () =>{
+    setCreateProject(true);
   }
 
+  const addProject = (data) =>{
+    let id = data.name.slice(0,4) + data.deadline.slice(5,7) + data.deadline.slice(8,10);
+
+    console.log(data);
+    let participList = new LinkedList();
+
+    // Iterate over the participants and add them to the linked list
+    data.participants.map((worker) => {
+        let allTasks = new DoublyLinkedList();  // Doubly Linked List for tasks
+
+        // Add tasks for the current worker into the allTasks doubly linked list
+        Object.entries(data.tasks).map(([name, tasks]) => {
+          if (worker.name === name)
+          {
+            tasks.forEach(task => {
+              allTasks.addProject(task);  // Add each task individually
+          });
+          }
+        })
+
+        // Create participant node object that holds both worker info and tasks
+        let participProperties = {
+            nameOfPart: {
+                name: worker.name,
+                lastName: worker.lastName,
+                jobTitle: worker.job,
+            },
+            allTasks: allTasks,
+        };
+
+        // Add the participant with their tasks to the participants list
+        participList.add(participProperties);
+    });
+
+    let project = {
+      description: data.description,
+      endDate: data.deadline,
+      id: id,
+      name: data.name,
+      numOfParticip: data.participants.length,
+      participants: data.participants,
+      participantsList: participList,
+    }
+
+    projectsList.addProject(project);
+    setProjects([projectsList.getAllProjects()]);
+
+  }
 
 
   return ( 
@@ -102,16 +145,19 @@ function App() {
         </header>
         <div className='allProjects'>
           <ProjectList projects={projectsList} 
-          addProject={addNewProject} 
           delete={deleteAllProjects} 
           onProjectPress={handleProjectPress}
           deleteProject={deleteProject}
           workers={handleWorkers}
+          createProj={newProject}
           />
-          <ProjectDetails selectedProj={selectedProject} 
+          <ProjectDetails 
+          createProjec={addProject}
+          selectedProj={selectedProject} 
           projects={projectsList} 
           workersDispl={displWorkers} 
           workers={workers}
+          newProj={createProject}
           />  
         </div>  
       </body>
