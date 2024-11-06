@@ -81,22 +81,48 @@ const ProjectDetails = (props) =>{
     {
         setNewDate(event.target.value);
     };
+
+    const saveProjectToFile = (project) => {
+        fetch("http://localhost:5000/save-project-file", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ project }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("File saved:", data.filePath);
+                alert(`File saved successfully at ${data.filePath}`);
+            })
+            .catch(error => {
+                console.error("Error saving file:", error);
+                alert("Failed to save file.");
+            });
+    };
     
 
     const createProject = () => {
+        
         const temp ={
             name: projectName,
             deadline: projectDeadline,
             participants: choosenWorker,
+            numOfParticip: choosenWorker.length,
             description: projectDescription,
             tasks: taskFields,
         }
-        props.createProjec(temp);
-        setProjectDeadline('');
-        setProjectName('');
-        setProjectDescription('');
-        setTaskFields([]);
-        setChoosenWorker([]);
+        console.log(temp);
+        saveProjectToFile(temp);
+
+
+
+    //    props.createProjec(temp);
+     //   setProjectDeadline('');
+     //   setProjectName('');
+     //   setProjectDescription('');
+     //   setTaskFields([]);
+       // setChoosenWorker([]);
     };
 
     

@@ -58,7 +58,15 @@ function App() {
     }  
     setProjects([projectsList.getAllProjects()]); // Update state
   }, []);  
-  console.log(projectsList);
+ // console.log(projectsList);
+
+
+
+
+
+
+
+
 
   const handleProjectPress = (project) => {
     setSelectedProject(project);  // Update the state with the pressed  project
@@ -88,7 +96,7 @@ function App() {
   const addProject = (data) =>{
     let id = data.name.slice(0,4) + data.deadline.slice(5,7) + data.deadline.slice(8,10);
 
-    console.log(data);
+    //console.log(data);
     let participList = new LinkedList();
 
     // Iterate over the participants and add them to the linked list
