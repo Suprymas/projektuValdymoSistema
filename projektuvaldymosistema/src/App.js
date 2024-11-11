@@ -107,8 +107,20 @@ function App() {
         Object.entries(data.tasks).map(([name, tasks]) => {
           if (worker.name === name)
           {
-            tasks.forEach(task => {
-              allTasks.addProject(task);  // Add each task individually
+            tasks.forEach((task) => {
+              const newTaskDate = new Date(task.deadline);
+
+              // Find the correct index to insert the task based on the deadline
+              let currentIndex = allTasks.head;
+              let index = 0;
+
+              while (currentIndex && new Date(currentIndex.data.deadline) <= newTaskDate) {
+                currentIndex = currentIndex.next;
+                index++;
+              }
+
+              // Insert the task at the correct position
+              allTasks.insertAt(index, task);
           });
           }
         })

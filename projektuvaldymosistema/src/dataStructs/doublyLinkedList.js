@@ -13,6 +13,7 @@ export class DoublyLinkedList {
 	constructor() {
 		this.head = null;
 		this.tail = null;
+        this.size = 0;
 	}
 
 	isEmpty() {
@@ -35,6 +36,7 @@ export class DoublyLinkedList {
 			temp.prev = this.tail;
 			this.tail = this.tail.next;
 		}
+        this.size += 1;
 	}
 
 	removeProject(projectId) { 
@@ -67,6 +69,84 @@ export class DoublyLinkedList {
         return false; // Project not found
     }
 
+    insertAt(index, data) {
+        const newNode = new Node(data);
+
+        if (index === 0) {
+            // Insert at the beginning
+            if (this.isEmpty()) {
+                this.head = newNode;
+                this.tail = newNode;
+            } else {
+                newNode.next = this.head;
+                this.head.prev = newNode;
+                this.head = newNode;
+            }
+        } 
+        else if (index === this.size)
+        {
+            this.tail.next = newNode;
+            newNode.prev = this.tail;
+            this.tail = newNode;
+        }
+        else {
+            let current = this.head;
+            let currentIndex = 0;
+
+            // Traverse to the node before the desired position
+            while (currentIndex < index - 1) {
+                current = current.next;
+                currentIndex++;
+            }
+
+            // Insert in the middle
+            newNode.next = current.next;
+            newNode.prev = current;
+            current.next.prev = newNode;
+            current.next = newNode;
+            
+        }
+        this.size += 1;
+    }
+
+    removeAt(index) {
+        let current;
+
+        if (index === 0) {
+            // Remove from the head
+            if (this.head === this.tail)
+            {
+                this.head = null;
+                this.tail = null;
+            }
+            else {
+                current = this.head;
+                this.head = this.head.next;
+                this.head.prev = null;
+            }
+        } else if (index === this.size - 1) {
+            // Remove from the tail
+            current = this.tail;
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+        } else {
+            // Remove from the middle
+            current = this.head;
+            let currentIndex = 0;
+
+            while (currentIndex < index) {
+                current = current.next;
+                currentIndex++;
+            }
+
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+
+        this.size -= 1;
+        return current.data; // Return the removed data
+    }
+
 	getAllProjects() {
         const projects = [];
         let current = this.head;
@@ -80,6 +160,7 @@ export class DoublyLinkedList {
 	clear(){
 		this.head = null;
 		this.tail = null;
+        this.size = 0;
 	}
 }
 

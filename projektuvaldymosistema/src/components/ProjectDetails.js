@@ -117,7 +117,7 @@ const ProjectDetails = (props) =>{
 
 
 
-    //    props.createProjec(temp);
+        props.createProjec(temp);
      //   setProjectDeadline('');
      //   setProjectName('');
      //   setProjectDescription('');
@@ -159,13 +159,22 @@ const ProjectDetails = (props) =>{
         let temp = current.data.participantsList.head;
         while (temp.data.nameOfPart.name !== name)
             temp = temp.next;
-        console.log(temp);
+
         const task ={
             deadline: newDate,
             finished: false,
             task: newTask,
         }
-        temp.data.allTasks.addProject(task);
+        console.log(temp);
+        let currentIndex = temp.data.allTasks.head;
+        let index = 0;
+        const newTaskDate = new Date(task.deadline);
+
+        while (currentIndex && new Date(currentIndex.data.deadline) <= newTaskDate) {
+            currentIndex = currentIndex.next;
+            index++;
+        }
+        temp.data.allTasks.insertAt(index, task);
         setNewDate('');
         setNewTask('');
         triggerReRender();
@@ -179,15 +188,50 @@ const ProjectDetails = (props) =>{
         let temp = current.data.participantsList.head;
         while (temp.data.nameOfPart.name !== worker)
             temp = temp.next;
+        let list = temp;
+        
         temp = temp.data.allTasks.head;
         while (temp.data.task !== taskName)
             temp = temp.next;
-
+        let taskList = list.data.allTasks;
+        let taskNode = list.data.allTasks.head;
+        let taskIndex = 0;
+        console.log(taskNode);
+        // Find the task node and its index
+        while (taskNode && taskNode.data.task !== taskName) {
+            taskNode = taskNode.next;
+            taskIndex++;
+        }
+        
         if (changeDate)
-            temp.data.deadline = changeDate;
+        {
+            
+            const updatedTask = { ...taskNode.data, deadline: changeDate };
+            
+            // Remove the task using removeAt
+            list.data.allTasks.removeAt(taskIndex);
+            
+            // Determine the correct position for the updated task
+            let currentIndex = taskList.head;
+            let newIndex = 0;
+            const newDeadline = new Date(changeDate);
+            
+            while (currentIndex) {
+                const currentDeadline = new Date(currentIndex.data.deadline);
+                if (newDeadline < currentDeadline) {
+                    break;
+                }
+                currentIndex = currentIndex.next;
+                newIndex++;
+            }
 
-        setChangeDate('');
-        triggerReRender();
+            // Reinsert the task at the correct position using insertAt
+            taskList.insertAt(newIndex, updatedTask);
+
+            // Reset changeDate and re-render
+            setChangeDate('');
+            triggerReRender();
+        } 
     }
 
 
@@ -444,7 +488,7 @@ const ProjectDetails = (props) =>{
                             {curr.data.nameOfPart.name} {curr.data.nameOfPart.lastName} {curr.data.nameOfPart.jobTitle}
                         </div>
                     </div>
-                    Užduočių kiekis:  {curr.data.nameOfPart.numOfTasks}
+                    Užduotys:  {curr.data.nameOfPart.numOfTasks}
                     <div>
                         {task}
                     </div>
