@@ -12,6 +12,17 @@ export class LinkedList {
         this.size = 0;
     }
 
+    findNode(predicate) {
+        let current = this.head;
+        while (current !== null) {
+            if (predicate(current.data)) {
+                return current; // Return the node itself
+            }
+            current = current.next;
+        }
+        return null; // Return null if no matching node is found
+    }
+
     // adds an worker at the end of list
     add(worker) {
         // creates a new node

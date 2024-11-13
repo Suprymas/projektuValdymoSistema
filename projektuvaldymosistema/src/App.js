@@ -14,12 +14,15 @@ function App() {
   const [displWorkers, setDisplWorkers] = useState(null);
   const [createProject, setCreateProject] = useState(null);
   const [workers, setWorkers] = useState(new LinkedList());
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [logOut, setLogOut] = useState(false);
   
-  useEffect(() => {
+  useEffect(() => { //useEffect runs the first time it loads
 
-    for(let i = 0; i < workerData.length; i++)   
+    if (!isInitialized){  
+      for(let i = 0; i < workerData.length; i++)   //issaugomi darbuotojai is json failo i linkedlista
       {
-        let temp = {
+        const temp = {
           name: workerData[i].name,
           lastName: workerData[i].lastName,
           job: workerData[i].jobTitle,
@@ -27,63 +30,42 @@ function App() {
         }
         workers.add(temp); 
       } 
-
-    for(let i = 0; i < projectsJson.length ; i++)
-    { 
-      projectsJson[i].participantsList = new LinkedList();
-      for (let j = 0; j < projectsJson[i].numOfParticip; j++)
-      {
-
-        let current = workers.head;
-        while(current.data.name !== projectsJson[i].participants[j].name)
+      
+      for(let i = 0; i < projectsJson.length ; i++) //issaugomi projektai i doublylinkedlista
+      { 
+        projectsJson[i].participantsList = new LinkedList();
+        for (let j = 0; j < projectsJson[i].numOfParticip; j++) //nuskaitom kiek darbuotoju
         {
-          current = current.next;
+
+          let node = workers.findNode(worker => worker.name === projectsJson[i].participants[j].name); //surandame tarp darbuotoju linkedlisto darbuotoja ir jam priskiriame darbus
+
+          let tasks = new DoublyLinkedList(); //sukuriame doublylinkedlista
+          for (let y = 0; y < projectsJson[i].participants[j].numOfTasks; y++)
+          {
+            tasks.add(projectsJson[i].participants[j].tasks[y]); //sudedame uzduotis i doublylinkedlista, jie eis i projekta
+            node.data.tasks.push(projectsJson[i].participants[j].tasks[y]); //sudedame uzduotis i kita dooublylinkedlista, jie eis i darbuotoju atskira linkedlista
+
+          }
+          let participProperties = {      //objekta sukuriame kuri desime i linked lista
+            allTasks: tasks,      //uzduotis doublylinkedlist
+            nameOfPart: projectsJson[i].participants[j],      //darbuotojo vardas, pavarde, pareigos
+          }
+          projectsJson[i].participantsList.add(participProperties); //dedame i linkedlista
         }
+        projectsList.add(projectsJson[i]); //i projektu doublylinkedlista pridedam node
+      }  
+      setProjects([projectsList.getAllProjects()]); // Update state
+      setIsInitialized(true);
+    }
+  }, [isInitialized, projectsList]);  
 
 
-        let tasks = new DoublyLinkedList();
-        for (let y = 0; y < projectsJson[i].participants[j].numOfTasks; y++)
-        {
-          tasks.addProject(projectsJson[i].participants[j].tasks[y]); 
-          current.data.tasks.push(projectsJson[i].participants[j].tasks[y]);
-
-        }
-        let participProperties = { 
-          allTasks: tasks,
-          nameOfPart: projectsJson[i].participants[j],
-        }
-        projectsJson[i].participantsList.add(participProperties);
-      }
-      projectsList.addProject(projectsJson[i]);
-    }  
-    setProjects([projectsList.getAllProjects()]); // Update state
-  }, []);  
- // console.log(projectsList);
-
-
-
-
-
-
-
-
-
-  const handleProjectPress = (project) => {
-    setSelectedProject(project);  // Update the state with the pressed  project
+//----------------renderinimui skirta
+  const handleProjectPress = (project) => { 
+    setSelectedProject(project);  
     setDisplWorkers(null);
     setCreateProject(null);
   };
-
-
-  const deleteProject = (projectId) =>{
-      projectsList.removeProject(projectId);
-      setProjects([...projectsList.getAllProjects()]);
-  }
-
-  const deleteAllProjects = () => {  
-      projectsList.clear(); 
-      setProjects([]); 
-  } 
 
   const handleWorkers = () =>{
     setDisplWorkers(true);
@@ -92,8 +74,50 @@ function App() {
   const newProject = () =>{
     setCreateProject(true);
   }
+//-----------------
+  
 
-  const addProject = (data) =>{
+  const convertProjectToJSON = (project) => { //projekto vertimas i jsona kad galetume issaugot
+    const participantsArray = [];
+    let currentParticipant = project.participantsList.head;
+
+    while (currentParticipant !== null) {
+        const participant = currentParticipant.data;
+        const tasksArray = [];
+        let currentTask = participant.allTasks.head;
+
+        while (currentTask !== null) {
+            tasksArray.push({
+                task: currentTask.data.task,
+                deadline: currentTask.data.deadline,
+                finished: currentTask.data.finished,
+            });
+            currentTask = currentTask.next;
+        }
+
+        participantsArray.push({
+            name: participant.nameOfPart.name,
+            lastName: participant.nameOfPart.lastName,
+            jobTitle: participant.nameOfPart.jobTitle,
+            numOfTasks: tasksArray.length,
+            tasks: tasksArray,
+        });
+
+        currentParticipant = currentParticipant.next;
+    }
+
+    // Convert the entire project into a serializable JSON object
+    return {
+        id: project.id,
+        name: project.name,
+        description: project.description,
+        endDate: project.endDate,
+        numOfParticip: project.numOfParticip,
+        participants: participantsArray,
+    };
+};
+
+  const addProject = async (data) =>{
     let id = data.name.slice(0,4) + data.deadline.slice(5,7) + data.deadline.slice(8,10);
 
     //console.log(data);
@@ -149,37 +173,116 @@ function App() {
       participantsList: participList,
     }
 
-    projectsList.addProject(project);
+    projectsList.add(project);
     setProjects([projectsList.getAllProjects()]);
+
+
+
+
+
+
+try {
+  // Convert the project to a JSON-friendly format
+  const projectJSON = convertProjectToJSON(project);
+
+  // Send the serialized project to the backend
+  const response = await fetch('http://localhost:5000/update-project-json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ project: projectJSON }),
+  });
+
+  if (!response.ok) {
+      throw new Error(`Error saving project: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+  console.log("Project saved successfully:", result);
+  } catch (error) {
+    console.error("Error calling API to save project:", error);
+  }
+
+
+
+
 
   }
 
+  const finishProj = (projId) =>
+  {
+
+    let current = projectsList.head;
+    let index = 0;
+    while(current.data.id !== projId)
+    {
+      current = current.next;
+      index++;
+    }
+
+    fetch("http://localhost:5000/log-task-update", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          taskName: "",
+          status: "projec-finito",
+          newDate: "",
+          projectName: current.data.name,
+          deadline: current.data.endDate,
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Task update logged:", data.message);
+    })
+    .catch((error) => {
+        console.error("Error logging task update:", error);
+    });
+    projectsList.removeAt(index);
+    setSelectedProject(null);
+  }
 
   return ( 
     <div className="App">
        <body>
-        <header className="App-header">
-          <div className='ProjectName'>
-            <strong>Projektu Valdymo Sistema</strong>
-          </div> 
-        </header>
-        <div className='allProjects'>
-          <ProjectList projects={projectsList} 
-          delete={deleteAllProjects} 
-          onProjectPress={handleProjectPress}
-          deleteProject={deleteProject}
-          workers={handleWorkers}
-          createProj={newProject}
-          />
-          <ProjectDetails 
-          createProjec={addProject}
-          selectedProj={selectedProject} 
-          projects={projectsList} 
-          workersDispl={displWorkers} 
-          workers={workers}
-          newProj={createProject}
-          />  
-        </div>  
+       {!logOut ?
+        (
+          <div>
+            <header className="App-header">
+              <div className='ProjectName'>
+                <strong>Projektų Valdymo Sistema</strong>
+              </div> 
+              <div className='log-out'>
+                <button onClick={() => {
+                  setLogOut(true);
+                }}>Atsijungti</button>
+              </div>
+            </header>
+            <div className='allProjects'>
+              <ProjectList projects={projectsList} 
+              onProjectPress={handleProjectPress}
+              workers={handleWorkers}
+              createProj={newProject}
+              />
+              <ProjectDetails 
+              createProjec={addProject}
+              selectedProj={selectedProject} 
+              projects={projectsList} 
+              workersDispl={displWorkers} 
+              workers={workers}
+              newProj={createProject}
+              finish={finishProj}
+              />  
+            </div>
+          </div>  
+        ) 
+        :
+        ( <div className='exit'>
+            <strong>Viso gero!</strong>
+          </div>
+        )
+        }
       </body>
     </div>
   );

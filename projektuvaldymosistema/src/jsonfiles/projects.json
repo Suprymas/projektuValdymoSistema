@@ -1,216 +1,221 @@
 [
-    {
-        "id": "Serv1230",
-        "name": "Serverių instaliavimas",
-        "endDate": "2024-12-30",
-        "numOfParticip": 3,
-        "participants": [
-            {
-                "name": "Kazys",
-                "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas",
-                "numOfTasks": 3,
-                "tasks": [
-                    {
-                        "task": "Serverio duomenų bazės paruošimas",
-                        "deadline": "2024-10-15",
-                        "finished": false
-                    },
-                    {
-                        "task": "API ryšio konfigūravimas",
-                        "deadline": "2024-11-01",
-                        "finished": false
-                    },
-                    {
-                        "task": "Serverio priežiūros testavimas",
-                        "deadline": "2024-12-10",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Agnė",
-                "lastName": "Agnevičienė",
-                "jobTitle": "Kibernetikos specialistė",
-                "numOfTasks": 3,
-                "tasks": [
-                    {
-                        "task": "Saugumo konfigūravimo įdiegimas",
-                        "deadline": "2024-10-20",
-                        "finished": false
-                    },
-                    {
-                        "task": "Prieigos kontrolės nustatymai",
-                        "deadline": "2024-11-10",
-                        "finished": false
-                    },
-                    {
-                        "task": "Įsilaužimų aptikimo testai",
-                        "deadline": "2024-12-05",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Matas",
-                "lastName": "Matauskas",
-                "jobTitle": "IT architektas",
-                "numOfTasks": 2,
-                "tasks": [
-                    {
-                        "task": "Serverio struktūros planavimas",
-                        "deadline": "2024-10-25",
-                        "finished": false
-                    },
-                    {
-                        "task": "Sistemų sąveikos analizė",
-                        "deadline": "2024-11-15",
-                        "finished": false
-                    }
-                ]
-            }
-        ],
-        "description": "Projektas skirtas organizacijos serverių sistemų diegimui ir konfigūravimui. Komanda užtikrins, kad visi serveriai veiktų efektyviai ir patikimai. Bus kuriama integracija su esamomis IT sistemomis."
-    },
-    {
-        "id": "E-ko1115",
-        "name": "E-komercijos svetainės kūrimas",
-        "endDate": "2024-11-15",
-        "numOfParticip": 4,
-        "participants": [
-            {
-                "name": "Linas",
-                "lastName": "Linauskas",
-                "jobTitle": "Front-end programuotojas",
-                "numOfTasks": 3,
-                "tasks": [
-                    {
-                        "task": "Pradinis svetainės dizainas",
-                        "deadline": "2024-09-30",
-                        "finished": false
-                    },
-                    {
-                        "task": "Navigacijos sistemos kūrimas",
-                        "deadline": "2024-10-15",
-                        "finished": false
-                    },
-                    {
-                        "task": "Prisitaikančio dizaino pritaikymas",
-                        "deadline": "2024-10-30",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Kazys",
-                "lastName": "Kazlauskas",
-                "jobTitle": "Back-end programuotojas",
-                "numOfTasks": 2,
-                "tasks": [
-                    {
-                        "task": "Produkto duomenų bazės kūrimas",
-                        "deadline": "2024-09-25",
-                        "finished": false
-                    },
-                    {
-                        "task": "Mokėjimų integracijos testavimas",
-                        "deadline": "2024-10-10",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Antanas",
-                "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris",
-                "numOfTasks": 2,
-                "tasks": [
-                    {
-                        "task": "Vartotojo kelionės planavimas",
-                        "deadline": "2024-10-05",
-                        "finished": false
-                    },
-                    {
-                        "task": "Testavimas su naudotojais",
-                        "deadline": "2024-10-20",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Petras",
-                "lastName": "Petrauskas",
-                "jobTitle": "UI dizaineris",
-                "numOfTasks": 3,
-                "tasks": [
-                    {
-                        "task": "Pagrindinio puslapio dizainas",
-                        "deadline": "2024-09-15",
-                        "finished": false
-                    },
-                    {
-                        "task": "Produktų katalogo dizainas",
-                        "deadline": "2024-10-01",
-                        "finished": false
-                    },
-                    {
-                        "task": "Mobilios versijos dizainas",
-                        "deadline": "2024-10-15",
-                        "finished": false
-                    }
-                ]
-            }
-        ],
-        "description": "Kuriama moderni e-komercijos svetainė su patogia vartotojo sąsaja ir optimizuotu pirkinių krepšeliu. Projektas apima front-end ir back-end programavimą bei UX/UI dizaino kūrimą."
-    },
-    {
-        "id": "SEOe0120",
-        "name": "SEO ir rinkodaros strategija",
-        "endDate": "2025-01-20",
-        "numOfParticip": 2,
-        "participants": [
-            {
-                "name": "Jonas",
-                "lastName": "Jonauskas",
-                "jobTitle": "SEO ekspertas",
-                "numOfTasks": 3,
-                "tasks": [
-                    {
-                        "task": "Raktažodžių analizė",
-                        "deadline": "2024-11-10",
-                        "finished": false
-                    },
-                    {
-                        "task": "Meta duomenų optimizavimas",
-                        "deadline": "2024-11-20",
-                        "finished": false
-                    },
-                    {
-                        "task": "SEO ataskaitų rengimas",
-                        "deadline": "2024-12-05",
-                        "finished": false
-                    }
-                ]
-            },
-            {
-                "name": "Antanas",
-                "lastName": "Antanauskas",
-                "jobTitle": "UX dizaineris",
-                "numOfTasks": 2,
-                "tasks": [
-                    {
-                        "task": "Vartotojų elgsenos tyrimai",
-                        "deadline": "2024-11-15",
-                        "finished": false
-                    },
-                    {
-                        "task": "SEO rekomendacijų testavimas",
-                        "deadline": "2024-12-01",
-                        "finished": false
-                    }
-                ]
-            }
-        ],
-        "description": "Projekte bus vystoma SEO strategija siekiant pagerinti svetainės matomumą paieškos sistemose. Projektas apims ir UX patobulinimus pagal SEO reikalavimus."
-    }
+  {
+    "id": "Serv1230",
+    "name": "Serverių instaliavimas",
+    "description": "Projektas skirtas organizacijos serverių sistemų diegimui ir konfigūravimui. Komanda užtikrins, kad visi serveriai veiktų efektyviai ir patikimai. Bus kuriama integracija su esamomis IT sistemomis.",
+    "endDate": "2024-12-30",
+    "numOfParticip": 3,
+    "participants": [
+      {
+        "name": "Kazys",
+        "lastName": "Kazlauskas",
+        "jobTitle": "Back-end programuotojas",
+        "numOfTasks": 3,
+        "tasks": [
+          {
+            "task": "Serverio duomenų bazės paruošimas",
+            "deadline": "2024-10-15",
+            "finished": false
+          },
+          {
+            "task": "API ryšio konfigūravimas",
+            "deadline": "2024-11-01",
+            "finished": false
+          },
+          {
+            "task": "Serverio priežiūros testavimas",
+            "deadline": "2024-12-10",
+            "finished": false
+          }
+        ]
+      },
+      {
+        "name": "Agnė",
+        "lastName": "Agnevičienė",
+        "jobTitle": "Kibernetikos specialistė",
+        "numOfTasks": 3,
+        "tasks": [
+          {
+            "task": "Saugumo konfigūravimo įdiegimas",
+            "deadline": "2024-10-20",
+            "finished": false
+          },
+          {
+            "task": "Prieigos kontrolės nustatymai",
+            "deadline": "2024-11-10",
+            "finished": false
+          },
+          {
+            "task": "Įsilaužimų aptikimo testai",
+            "deadline": "2024-12-05",
+            "finished": false
+          }
+        ]
+      },
+      {
+        "name": "Matas",
+        "lastName": "Matauskas",
+        "jobTitle": "IT architektas",
+        "numOfTasks": 2,
+        "tasks": [
+          {
+            "task": "Serverio struktūros planavimas",
+            "deadline": "2024-10-25",
+            "finished": false
+          },
+          {
+            "task": "Sistemų sąveikos analizė",
+            "deadline": "2024-11-15",
+            "finished": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "E-ko1115",
+    "name": "E-komercijos svetainės kūrimas",
+    "description": "Kuriama moderni e-komercijos svetainė su patogia vartotojo sąsaja ir optimizuotu pirkinių krepšeliu. Projektas apima front-end ir back-end programavimą bei UX/UI dizaino kūrimą.",
+    "endDate": "2024-11-15",
+    "numOfParticip": 4,
+    "participants": [
+      {
+        "name": "Linas",
+        "lastName": "Linauskas",
+        "jobTitle": "Front-end programuotojas",
+        "numOfTasks": 3,
+        "tasks": [
+          {
+            "task": "Pradinis svetainės dizainas",
+            "deadline": "2024-09-30",
+            "finished": true
+          },
+          {
+            "task": "Navigacijos sistemos kūrimas",
+            "deadline": "2024-10-15",
+            "finished": true
+          },
+          {
+            "task": "Prisitaikančio dizaino pritaikymas",
+            "deadline": "2024-10-30",
+            "finished": true
+          }
+        ]
+      },
+      {
+        "name": "Kazys",
+        "lastName": "Kazlauskas",
+        "jobTitle": "Back-end programuotojas",
+        "numOfTasks": 2,
+        "tasks": [
+          {
+            "task": "Produkto duomenų bazės kūrimas",
+            "deadline": "2024-09-25",
+            "finished": false
+          },
+          {
+            "task": "Mokėjimų integracijos testavimas",
+            "deadline": "2024-10-10",
+            "finished": false
+          }
+        ]
+      },
+      {
+        "name": "Antanas",
+        "lastName": "Antanauskas",
+        "jobTitle": "UX dizaineris",
+        "numOfTasks": 2,
+        "tasks": [
+          {
+            "task": "Testavimas su naudotojais",
+            "deadline": "2024-10-20",
+            "finished": false
+          },
+          {
+            "task": "Vartotojo kelionės planavimas",
+            "deadline": "2024-12-30",
+            "finished": false
+          }
+        ]
+      },
+      {
+        "name": "Petras",
+        "lastName": "Petrauskas",
+        "jobTitle": "UI dizaineris",
+        "numOfTasks": 4,
+        "tasks": [
+          {
+            "task": "Pagrindinio puslapio dizainas",
+            "deadline": "2024-09-15",
+            "finished": false
+          },
+          {
+            "task": "Produktų katalogo dizainas",
+            "deadline": "2024-10-01",
+            "finished": false
+          },
+          {
+            "task": "Mobilios versijos dizainas",
+            "deadline": "2024-10-15",
+            "finished": false
+          },
+          {
+            "task": "apsisikelis",
+            "deadline": "2024-12-21",
+            "finished": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SEOe0120",
+    "name": "SEO ir rinkodaros strategija",
+    "endDate": "2025-01-20",
+    "numOfParticip": 2,
+    "participants": [
+      {
+        "name": "Jonas",
+        "lastName": "Jonauskas",
+        "jobTitle": "SEO ekspertas",
+        "numOfTasks": 3,
+        "tasks": [
+          {
+            "task": "Raktažodžių analizė",
+            "deadline": "2024-11-10",
+            "finished": false
+          },
+          {
+            "task": "Meta duomenų optimizavimas",
+            "deadline": "2024-11-20",
+            "finished": false
+          },
+          {
+            "task": "SEO ataskaitų rengimas",
+            "deadline": "2024-12-05",
+            "finished": false
+          }
+        ]
+      },
+      {
+        "name": "Antanas",
+        "lastName": "Antanauskas",
+        "jobTitle": "UX dizaineris",
+        "numOfTasks": 2,
+        "tasks": [
+          {
+            "task": "Vartotojų elgsenos tyrimai",
+            "deadline": "2024-11-15",
+            "finished": false
+          },
+          {
+            "task": "SEO rekomendacijų testavimas",
+            "deadline": "2024-12-01",
+            "finished": false
+          }
+        ]
+      }
+    ],
+    "description": "Projekte bus vystoma SEO strategija siekiant pagerinti svetainės matomumą paieškos sistemose. Projektas apims ir UX patobulinimus pagal SEO reikalavimus."
+  }
 ]

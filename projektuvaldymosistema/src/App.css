@@ -25,3 +25,13 @@ body{
   gap: 20px;
 }
 
+.log-out{
+  display: flex;
+  justify-content: end; 
+}
+
+.exit{
+  text-align: center;
+  padding: 350px;
+  font-size: 100px;
+}

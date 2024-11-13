@@ -1,37 +1,166 @@
 [
-    {
-      "name": "Petras",
-      "lastName": "Petrauskas",
-      "jobTitle": "UI dizaineris"
-    },
-    {
-        "name": "Antanas",
-        "lastName": "Antanauskas",
-        "jobTitle": "UX dizaineris"
-    },
-    {
-        "name": "Jonas",
-        "lastName": "Jonauskas",
-        "jobTitle": "SEO ekspertas"
-    },
-    {
-        "name": "Linas",
-        "lastName": "Linauskas",
-        "jobTitle": "Front-end programuotojas"
-    },
-    {
-        "name": "Kazys",
-        "lastName": "Kazlauskas",
-        "jobTitle": "Back-end programuotojas"
-    },
-    {
-        "name": "Agnė",
-        "lastName": "Agnevičienė",
-        "jobTitle": "Kibernetikos specialistė"
-    },
-    {
-        "name": "Matas",
-        "lastName": "Matauskas",
-        "jobTitle": "IT architektas"
-    }
-  ]
+  {
+    "name": "Petras",
+    "lastName": "Petrauskas",
+    "jobTitle": "UI dizaineris",
+    "tasks": [
+      {
+        "task": "Pagrindinio puslapio dizainas",
+        "deadline": "2024-09-15",
+        "finished": false
+      },
+      {
+        "task": "Produktų katalogo dizainas",
+        "deadline": "2024-10-01",
+        "finished": false
+      },
+      {
+        "task": "Mobilios versijos dizainas",
+        "deadline": "2024-10-15",
+        "finished": false
+      }
+    ]
+  },
+  {
+    "name": "Antanas",
+    "lastName": "Antanauskas",
+    "jobTitle": "UX dizaineris",
+    "tasks": [
+      {
+        "task": "Vartotojo kelionės planavimas",
+        "deadline": "2024-10-05",
+        "finished": false
+      },
+      {
+        "task": "Testavimas su naudotojais",
+        "deadline": "2024-10-20",
+        "finished": false
+      },
+      {
+        "task": "Vartotojų elgsenos tyrimai",
+        "deadline": "2024-11-15",
+        "finished": false
+      },
+      {
+        "task": "SEO rekomendacijų testavimas",
+        "deadline": "2024-12-01",
+        "finished": false
+      }
+    ]
+  },
+  {
+    "name": "Jonas",
+    "lastName": "Jonauskas",
+    "jobTitle": "SEO ekspertas",
+    "tasks": [
+      {
+        "task": "Raktažodžių analizė",
+        "deadline": "2024-11-10",
+        "finished": false
+      },
+      {
+        "task": "Meta duomenų optimizavimas",
+        "deadline": "2024-11-20",
+        "finished": false
+      },
+      {
+        "task": "SEO ataskaitų rengimas",
+        "deadline": "2024-12-05",
+        "finished": false
+      }
+    ]
+  },
+  {
+    "name": "Linas",
+    "lastName": "Linauskas",
+    "jobTitle": "Front-end programuotojas",
+    "tasks": [
+      {
+        "task": "Pradinis svetainės dizainas",
+        "deadline": "2024-09-30",
+        "finished": true
+      },
+      {
+        "task": "Navigacijos sistemos kūrimas",
+        "deadline": "2024-10-15",
+        "finished": true
+      },
+      {
+        "task": "Prisitaikančio dizaino pritaikymas",
+        "deadline": "2024-10-30",
+        "finished": true
+      }
+    ]
+  },
+  {
+    "name": "Kazys",
+    "lastName": "Kazlauskas",
+    "jobTitle": "Back-end programuotojas",
+    "tasks": [
+      {
+        "task": "Serverio duomenų bazės paruošimas",
+        "deadline": "2024-10-15",
+        "finished": false
+      },
+      {
+        "task": "API ryšio konfigūravimas",
+        "deadline": "2024-11-01",
+        "finished": false
+      },
+      {
+        "task": "Serverio priežiūros testavimas",
+        "deadline": "2024-12-10",
+        "finished": false
+      },
+      {
+        "task": "Produkto duomenų bazės kūrimas",
+        "deadline": "2024-09-25",
+        "finished": false
+      },
+      {
+        "task": "Mokėjimų integracijos testavimas",
+        "deadline": "2024-10-10",
+        "finished": false
+      }
+    ]
+  },
+  {
+    "name": "Agnė",
+    "lastName": "Agnevičienė",
+    "jobTitle": "Kibernetikos specialistė",
+    "tasks": [
+      {
+        "task": "Saugumo konfigūravimo įdiegimas",
+        "deadline": "2024-10-20",
+        "finished": false
+      },
+      {
+        "task": "Prieigos kontrolės nustatymai",
+        "deadline": "2024-11-10",
+        "finished": false
+      },
+      {
+        "task": "Įsilaužimų aptikimo testai",
+        "deadline": "2024-12-05",
+        "finished": false
+      }
+    ]
+  },
+  {
+    "name": "Matas",
+    "lastName": "Matauskas",
+    "jobTitle": "IT architektas",
+    "tasks": [
+      {
+        "task": "Serverio struktūros planavimas",
+        "deadline": "2024-10-25",
+        "finished": false
+      },
+      {
+        "task": "Sistemų sąveikos analizė",
+        "deadline": "2024-11-15",
+        "finished": false
+      }
+    ]
+  }
+]

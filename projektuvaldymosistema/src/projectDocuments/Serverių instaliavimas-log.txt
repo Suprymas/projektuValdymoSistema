@@ -1,0 +1,55 @@
+Serverių instaliavimas
+
+Aprašymas:      Projektas skirtas organizacijos serverių sistemų diegimui ir konfigūravimui. Komanda užtikrins, kad visi serveriai veiktų efektyviai ir patikimai. Bus kuriama integracija su esamomis IT sistemomis.
+Terminas:       2024-12-30
+Pradžios Data:  2024-11-12
+
+
+
+Serverio duomenų bazės paruošimas - baigta (2024-11-12)
+
+API ryšio konfigūravimas - baigta (2024-11-12)
+
+Serverio priežiūros testavimas - baigta (2024-11-12)
+
+Saugumo konfigūravimo įdiegimas - baigta (2024-11-12)
+
+Prieigos kontrolės nustatymai - baigta (2024-11-12)
+
+Įsilaužimų aptikimo testai - baigta (2024-11-12)
+
+Serverio struktūros planavimas - baigta (2024-11-12)
+
+Sistemų sąveikos analizė - baigta (2024-11-12)
+
+------------------------Projektas baigtas laiku (2024-11-12)------------------------
+
+Serverio duomenų bazės paruošimas - baigta (2024-11-12)
+
+API ryšio konfigūravimas - baigta (2024-11-12)
+
+Serverio priežiūros testavimas - baigta (2024-11-12)
+
+Serverio duomenų bazės paruošimas - baigta (2024-11-13)
+
+API ryšio konfigūravimas - baigta (2024-11-13)
+
+Serverio priežiūros testavimas - baigta (2024-11-13)
+
+Saugumo konfigūravimo įdiegimas - baigta (2024-11-13)
+
+alo - baigta (2024-11-13)
+
+bandymas - baigta (2024-11-13)
+
+Įsilaužimų aptikimo testai - baigta (2024-11-13)
+
+Prieigos kontrolės nustatymai - baigta (2024-11-13)
+
+Serverio duomenų bazės paruošimas - pakeista data į 2024-12-30 (2024-11-13)
+
+Serverio duomenų bazės paruošimas - pakeista data į 2024-12-30 (2024-11-13)
+
+Serverio duomenų bazės paruošimas - pakeista data į 2024-12-31 (2024-11-13)
+
+Serverio duomenų bazės paruošimas - pakeista data į 2024-12-31 (2024-11-13)

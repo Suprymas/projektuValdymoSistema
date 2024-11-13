@@ -3,6 +3,7 @@ import './ProjectList.css';
  
 
 const ProjectList = (props) => {
+    console.log(props.projects);
     return (  
         <div className="list">
             <div className='Buttons'>

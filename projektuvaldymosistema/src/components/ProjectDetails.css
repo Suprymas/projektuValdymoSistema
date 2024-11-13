@@ -90,3 +90,8 @@ button{
 .changedate{
     width: 200px;
 }
+
+.finish{
+    display: flex;
+    justify-content: center;
+}

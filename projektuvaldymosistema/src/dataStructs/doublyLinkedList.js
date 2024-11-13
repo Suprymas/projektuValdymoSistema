@@ -22,7 +22,7 @@ export class DoublyLinkedList {
 	}
  
 	// Method to add item at the last of doubly linked list
-	addProject(project) {
+	add(project) {
 		
 		let temp = new Node(project);
            
