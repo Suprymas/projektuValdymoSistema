@@ -59,7 +59,6 @@ function App() {
     }
   }, [isInitialized, projectsList]);  
 
-
 //----------------renderinimui skirta
   const handleProjectPress = (project) => { 
     setSelectedProject(project);  
@@ -69,6 +68,7 @@ function App() {
 
   const handleWorkers = () =>{
     setDisplWorkers(true);
+    setCreateProject(null);
   } 
 
   const newProject = () =>{
@@ -79,35 +79,33 @@ function App() {
 
   const convertProjectToJSON = (project) => { //projekto vertimas i jsona kad galetume issaugot
     const participantsArray = [];
-    let currentParticipant = project.participantsList.head;
-
-    while (currentParticipant !== null) {
-        const participant = currentParticipant.data;
-        const tasksArray = [];
-        let currentTask = participant.allTasks.head;
-
-        while (currentTask !== null) {
-            tasksArray.push({
-                task: currentTask.data.task,
-                deadline: currentTask.data.deadline,
-                finished: currentTask.data.finished,
-            });
-            currentTask = currentTask.next;
-        }
-
-        participantsArray.push({
-            name: participant.nameOfPart.name,
-            lastName: participant.nameOfPart.lastName,
-            jobTitle: participant.nameOfPart.jobTitle,
-            numOfTasks: tasksArray.length,
-            tasks: tasksArray,
+    
+    for(let i = 0; i < project.participantsList.getSize(); i++) //einame per visus projekto darbuotojus
+    { 
+      const tasksArray = [];
+      const participant = project.participantsList.getNode(i);
+      
+      for (let j = 0; j < participant.data.allTasks.getSize(); j++) //einame per kiekvieno darbutojo uzduotis
+      {
+        const participantTask = participant.data.allTasks.getNode(j);
+        console.log(participantTask);
+        tasksArray.push({
+          task: participantTask.data.task,
+          deadline: participantTask.data.deadline,
+          finished: participantTask.data.finished,
         });
+      }
 
-        currentParticipant = currentParticipant.next;
+      participantsArray.push({
+        name: participant.data.nameOfPart.name,
+        lastName: participant.data.nameOfPart.lastName,
+        jobTitle: participant.data.nameOfPart.jobTitle,
+        numOfTasks: tasksArray.length,
+        tasks: tasksArray,
+      });
     }
-
-    // Convert the entire project into a serializable JSON object
-    return {
+    
+    return { //returninam jau duomenis kuriuos galim rasyt
         id: project.id,
         name: project.name,
         description: project.description,
@@ -115,55 +113,60 @@ function App() {
         numOfParticip: project.numOfParticip,
         participants: participantsArray,
     };
-};
+  };
 
-  const addProject = async (data) =>{
-    let id = data.name.slice(0,4) + data.deadline.slice(5,7) + data.deadline.slice(8,10);
+  const addProject = async (data) =>{ //naudojamas kai kuriamas naudotojo projektas
+    let id = data.name.slice(0,4) + data.deadline.slice(5,7) + data.deadline.slice(8,10); //sukuriam id
+    
+    let participList = new LinkedList(); //darbuotoju sarasas
 
-    //console.log(data);
-    let participList = new LinkedList();
-
-    // Iterate over the participants and add them to the linked list
     data.participants.map((worker) => {
-        let allTasks = new DoublyLinkedList();  // Doubly Linked List for tasks
-
-        // Add tasks for the current worker into the allTasks doubly linked list
-        Object.entries(data.tasks).map(([name, tasks]) => {
-          if (worker.name === name)
-          {
-            tasks.forEach((task) => {
-              const newTaskDate = new Date(task.deadline);
-
-              // Find the correct index to insert the task based on the deadline
-              let currentIndex = allTasks.head;
-              let index = 0;
-
-              while (currentIndex && new Date(currentIndex.data.deadline) <= newTaskDate) {
-                currentIndex = currentIndex.next;
-                index++;
+      let allTasks = new DoublyLinkedList();  //uzduociu sarasas
+      
+      Object.entries(data.tasks).map(([name, tasks]) => { //surenkame uzduotis ir priskiriame atitinkamai prie darbuotoju
+        if (worker.name === name)
+        {
+          tasks.forEach((task) => {
+            const newTaskDate = new Date(task.deadline); //terminas
+            
+            if (allTasks.getSize() === 0)
+              allTasks.add(task);
+            else {
+              let added = false;
+              for (let i = 0; i < allTasks.getSize(); i++) //ieskome kur pagal data galima ideti uzduoti
+              {
+                let taskEx = allTasks.getNode(i);
+                const tempDate = new Date(taskEx.data.deadline) 
+                if (tempDate >= newTaskDate)
+                {
+                  allTasks.insertAt(i, task);
+                  added = true;
+                  break;
+                }
               }
-
-              // Insert the task at the correct position
-              allTasks.insertAt(index, task);
+              if (!added)
+              {
+                allTasks.add(task);
+              }
+            }
           });
-          }
-        })
+        }
+      })
+      
+      
+      let participProperties = {//objektas saugantis informacija apie kiekviena darbuotoja ir jo uzduotis
+          nameOfPart: {
+              name: worker.name,
+              lastName: worker.lastName,
+              jobTitle: worker.job,
+          },
+          allTasks: allTasks, //doublylinkedlist
+      };
 
-        // Create participant node object that holds both worker info and tasks
-        let participProperties = {
-            nameOfPart: {
-                name: worker.name,
-                lastName: worker.lastName,
-                jobTitle: worker.job,
-            },
-            allTasks: allTasks,
-        };
-
-        // Add the participant with their tasks to the participants list
-        participList.add(participProperties);
+      participList.add(participProperties);//linkedlist
     });
 
-    let project = {
+    let project = { //galutinai sudedama i projekta objekta
       description: data.description,
       endDate: data.deadline,
       id: id,
@@ -173,53 +176,33 @@ function App() {
       participantsList: participList,
     }
 
-    projectsList.add(project);
+    projectsList.add(project); //doublylinkedlist
     setProjects([projectsList.getAllProjects()]);
 
 
+    //paverciam projekta i jsona
+    const projectJSON = convertProjectToJSON(project);
 
-
-
-
-try {
-  // Convert the project to a JSON-friendly format
-  const projectJSON = convertProjectToJSON(project);
-
-  // Send the serialized project to the backend
-  const response = await fetch('http://localhost:5000/update-project-json', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ project: projectJSON }),
-  });
-
-  if (!response.ok) {
-      throw new Error(`Error saving project: ${response.statusText}`);
+    //issaugom i json faila
+    const response = await fetch('http://localhost:5000/update-project-json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project: projectJSON }),
+    });
   }
 
-  const result = await response.json();
-  console.log("Project saved successfully:", result);
-  } catch (error) {
-    console.error("Error calling API to save project:", error);
-  }
-
-
-
-
-
-  }
-
-  const finishProj = (projId) =>
+  const finishProj = (projId) => //projekto uzbaigimas
   {
-
-    let current = projectsList.head;
-    let index = 0;
-    while(current.data.id !== projId)
+    let project;
+    let i;
+    for (i = 0; i < projectsList.getSize(); i++)
     {
-      current = current.next;
-      index++;
+      project = projectsList.getNode(i);
+      if (projId === project.data.id)
+        break;
     }
 
-    fetch("http://localhost:5000/log-task-update", {
+    fetch("http://localhost:5000/log-task-update", { //atnaujinamas projekto dokumentas
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -228,18 +211,11 @@ try {
           taskName: "",
           status: "projec-finito",
           newDate: "",
-          projectName: current.data.name,
-          deadline: current.data.endDate,
+          projectName: project.data.name,
+          deadline: project.data.endDate,
       }),
     })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Task update logged:", data.message);
-    })
-    .catch((error) => {
-        console.error("Error logging task update:", error);
-    });
-    projectsList.removeAt(index);
+    projectsList.removeAt(i);
     setSelectedProject(null);
   }
 

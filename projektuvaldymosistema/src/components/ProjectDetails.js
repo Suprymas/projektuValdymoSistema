@@ -15,7 +15,19 @@ const ProjectDetails = (props) =>{
 
 
 
-    const updateProjectFile = () => {
+    let current;
+    if (props.selectedProj !== null)
+    {
+        for (let i = 0; i < props.projects.getSize(); i++)
+        {
+            current = props.projects.getNode(i);
+            if (current.data.id === props.selectedProj)
+                break;
+        }
+    }  
+
+
+    const updateProjectFile = () => { //atnaujinti projekto json faila
         const updatedProject = {
             id: current.data.id,
             name: current.data.name,
@@ -23,52 +35,41 @@ const ProjectDetails = (props) =>{
             endDate: current.data.endDate,
             numOfParticip: current.data.numOfParticip,
             participants: [],
-        };  
-
-    
-        // Serialize participants list
-        let participantNode = current.data.participantsList.head;
-        while (participantNode !== null) {
-            const participant = participantNode.data;
-    
-            // Serialize tasks for each participant
+        }; 
+        
+        for(let i = 0; i < current.data.participantsList.getSize(); i++) //einame per visus projekto darbuotojus
+        { 
             const tasksArray = [];
-            let taskNode = participant.allTasks.head;
-            while (taskNode !== null) {
+            const participant = current.data.participantsList.getNode(i);
+            
+            for (let j = 0; j < participant.data.allTasks.getSize(); j++) //einame per kiekvieno darbutojo uzduotis
+            {
+                const participantTask = participant.data.allTasks.getNode(j);
                 tasksArray.push({
-                    task: taskNode.data.task,
-                    deadline: taskNode.data.deadline,
-                    finished: taskNode.data.finished,
+                    task: participantTask.data.task,
+                    deadline: participantTask.data.deadline,
+                    finished: participantTask.data.finished,
                 });
-                taskNode = taskNode.next;
             }
-    
+
             updatedProject.participants.push({
-                name: participant.nameOfPart.name,
-                lastName: participant.nameOfPart.lastName,
-                jobTitle: participant.nameOfPart.jobTitle,
+                name: participant.data.nameOfPart.name,
+                lastName: participant.data.nameOfPart.lastName,
+                jobTitle: participant.data.nameOfPart.jobTitle,
                 numOfTasks: tasksArray.length,
                 tasks: tasksArray,
             });
-    
-            participantNode = participantNode.next;
         }
 
-        // Call API to save changes
-        fetch("http://localhost:5000/update-project-json", {
+
+        
+        fetch("http://localhost:5000/update-project-json", { //updatiname json
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ project: updatedProject }),
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Project updated successfully:", data.message);
-            })
-            .catch(error => {
-                console.error("Error updating project file:", error);
-            });
     };
 
 
@@ -79,7 +80,7 @@ const ProjectDetails = (props) =>{
         setRenderTrigger(!renderTrigger);
     };
 
-    const addWorker = (worker) => {
+    const addWorker = (worker) => { //pasirinkti darbuotojai kuriant nauja projekta kol kas ne linkedlist
         const alreadyChosen = choosenWorker.some(
             (w) => w.name === worker.name && w.lastName === worker.lastName
         );
@@ -87,15 +88,13 @@ const ProjectDetails = (props) =>{
             setChoosenWorker((prevWorkers) => [...prevWorkers, worker]);
         }
     };
-
-    const addTaskFieldForWorker = (workerId) => {
+//-------------------------------renderinimo funkcijos
+    const addTaskFieldForWorker = (workerId) => { 
         setTaskFields((prevFields) => {
             const updatedFields = { ...prevFields };
-            // Initialize the worker's array if it doesn't exist
             if (!updatedFields[workerId]) {
                 updatedFields[workerId] = [];
             }
-            // Add a new task field set for this worker
             updatedFields[workerId] = [...updatedFields[workerId], { task: '', deadline: '', finished: false }];
             return updatedFields;
         });
@@ -138,17 +137,15 @@ const ProjectDetails = (props) =>{
         setNewTask(event.target.value);
     };
 
+    const HandleDateChange = (event) =>{
+        setChangeDate(event.target.value);
+    }
+
     const handleNewDate = (event) =>
     {
         setNewDate(event.target.value);
     };
-
-
-
-
-
-
-
+//--------------------------------------
 
     const saveProjectToFile = (project) => {
         fetch("http://localhost:5000/save-project-file", {
@@ -158,19 +155,10 @@ const ProjectDetails = (props) =>{
             },
             body: JSON.stringify({ project }),
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log("File saved:", data.filePath);
-                alert(`File saved successfully at ${data.filePath}`);
-            })
-            .catch(error => {
-                console.error("Error saving file:", error);
-                alert("Failed to save file.");
-            });
     };
     
 
-    const createProject = () => {
+    const createProject = async () => { //projekto sukurimas txt dokumento
         
         const temp ={
             name: projectName,
@@ -180,27 +168,32 @@ const ProjectDetails = (props) =>{
             description: projectDescription,
             tasks: taskFields,
         }
-        console.log(temp);
         saveProjectToFile(temp);
-
-
+        console.log(temp.tasks);
+        const response = await fetch('http://localhost:5000/worker/add-tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(temp.tasks),
+        });
 
         props.createProjec(temp);
-     //   setProjectDeadline('');
-     //   setProjectName('');
-     //   setProjectDescription('');
-     //   setTaskFields([]);
-       // setChoosenWorker([]);
+        setProjectDeadline('');
+        setProjectName('');
+        setProjectDescription('');
+        setTaskFields([]);
+        setChoosenWorker([]);
     };
 
     
 
-    const exportWorkerReport = (workerdata) => {
+    const exportWorkerReport = (workerdata) => { //darbuotojo ataskaita
         const workerName = workerdata.data.name;
-        console.log(workerName);
         
-        const worker = workerData.find(w => w.name === workerName);
+        const worker = workerData.find(w => w.name === workerName);//randamas darbuotojas ir jo uzduotys
         const { name, lastName, tasks } = worker;
+        console.log(tasks);
         let reportContent = `Darbuotojo ${name} ${lastName} ataskaita\n\nUžduotys:\n`;
         tasks.forEach((task, index) => {
             const taskStatus = task.finished ? 'Baigta' : 'Nepabaigta';
@@ -210,37 +203,32 @@ const ProjectDetails = (props) =>{
         const blob = new Blob([reportContent], { type: 'text/plain' });
         const fileUrl = URL.createObjectURL(blob);
     
-        const link = document.createElement('a');
+        const link = document.createElement('a'); //sukuriamas failas parsisiusti
         link.href = fileUrl;
         link.download = `${name}_${lastName}_Ataskaita.txt`;
         link.click();
     
-        URL.revokeObjectURL(fileUrl); // Clean up the object URL after download
+        URL.revokeObjectURL(fileUrl); 
         
     };
 
-    let current = props.projects.head;
-    if (props.selectedProj !== null)
-    {
-        while (current.data.id !== props.selectedProj)
+    const addTaskToWorker = async (name) =>{ //prideti uzduoti darbuotojui
+        let temp;
+        for (let i = 0; i < current.data.participantsList.getSize(); i++)
         {
-            current = current.next;
-        } 
-    }  
-
-    const addTaskToWorker = async (name) =>{
-        let temp = current.data.participantsList.head;
-        while (temp.data.nameOfPart.name !== name)
-            temp = temp.next;
+            temp = current.data.participantsList.getNode(i);
+            if (temp.data.nameOfPart.name === name)
+                break;
+        }
 
         const task ={
             deadline: newDate,
             finished: false,
             task: newTask,
         }
-        console.log(name);
+        console.log('alio');
         try {
-            const response = await fetch('http://localhost:5000/add-task', {
+            const response = await fetch('http://localhost:5000/add-task', { //pridedame i darbuotoju json faila nauja uzduoti
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -251,86 +239,86 @@ const ProjectDetails = (props) =>{
                     deadline: task.deadline,
                 }),
             });
-    
-            if (response.ok) {
-                // Task successfully added on the server, proceed with UI updates
-                console.log('Task added successfully');
-                setNewDate('');
-                setNewTask('');
-                triggerReRender();
-                updateProjectFile();
-            } else {
-                const errorData = await response.json();
-                console.error('Failed to add task:', errorData.error);
+        }
+        catch{}
+
+        const newTaskDate = new Date(task.deadline); //terminas
+            
+        if (temp.data.allTasks.getSize() === 0)
+            temp.data.allTasks.add(task);
+        else {
+            let added = false;
+            for (let i = 0; i < temp.data.allTasks.getSize(); i++) //ieskome kur pagal data galima ideti uzduoti
+            {
+            let taskEx = temp.data.allTasks.getNode(i);
+            const tempDate = new Date(taskEx.data.deadline) 
+            if (tempDate >= newTaskDate)
+            {
+                temp.data.allTasks.insertAt(i, task);
+                added = true;
+                break;
             }
-        } catch (error) {
-            console.error('Error adding task:', error);
+            }
+            if (!added)
+            {
+                temp.data.allTasks.add(task);
+            }
         }
-
-        let currentIndex = temp.data.allTasks.head;
-        let index = 0;
-        const newTaskDate = new Date(task.deadline);
-
-        while (currentIndex && new Date(currentIndex.data.deadline) <= newTaskDate) {
-            currentIndex = currentIndex.next;
-            index++;
-        }
-        temp.data.allTasks.insertAt(index, task);
+        
         setNewDate('');
         setNewTask('');
         triggerReRender();
         updateProjectFile();
     }
 
-    const HandleDateChange = (event) =>{
-        setChangeDate(event.target.value);
-    }
 
-    const changeOldDate = (taskName, worker) =>{
-        let temp = current.data.participantsList.head;
-        while (temp.data.nameOfPart.name !== worker)
-            temp = temp.next;
-        let list = temp;
-        
-        
-        temp = temp.data.allTasks.head;
-        while (temp.data.task !== taskName)
-            temp = temp.next;
-        let taskList = list.data.allTasks;
-        let taskNode = list.data.allTasks.head;
-        let taskIndex = 0;
-        console.log(taskNode);
-        // Find the task node and its index
-        while (taskNode && taskNode.data.task !== taskName) {
-            taskNode = taskNode.next;
-            taskIndex++;
-        }
-        
+
+    const changeOldDate = (taskName, worker) =>{ //uzduoties termino pakeitimas
         if (changeDate)
         {
+            let temp;
+            for (let i = 0; i < current.data.participantsList.getSize(); i++) //susirandame darbuotoja
+            {
+                temp = current.data.participantsList.getNode(i);
+                if (temp.data.nameOfPart.name === worker.name)
+                    break;
+            }
+            console.log(worker);
+
+            let list = temp;
+            let temp2 = temp;
+            let i;
+            for (i = 0; i < temp.data.allTasks.getSize(); i++) //susirandame darbuotojo tam tikra uzduoti
+            {
+                temp2 = temp.data.allTasks.getNode(i);
+                if (temp2.data.task === taskName)
+                    break;
+            }    
+            let taskList = list.data.allTasks;
             
-            const updatedTask = { ...taskNode.data, deadline: changeDate };
-            
-            // Remove the task using removeAt
-            list.data.allTasks.removeAt(taskIndex);
-            
-            // Determine the correct position for the updated task
-            let currentIndex = taskList.head;
-            let newIndex = 0;
+            const updatedTask = { ...(taskList.getNode(i)).data, deadline: changeDate };
+            taskList.removeAt(i); //ja pasaliname
+
+            let added = false;
             const newDeadline = new Date(changeDate);
             
-            while (currentIndex) {
-                const currentDeadline = new Date(currentIndex.data.deadline);
-                if (newDeadline < currentDeadline) {
+            for (let i = 0; i < taskList.getSize(); i++) //pridedame is naujo is rikiavus
+            {
+                let taskEx = taskList.getNode(i);
+                const tempDate = new Date(taskEx.data.deadline)
+                if (tempDate >= newDeadline)
+                {
+                    taskList.insertAt(i, updatedTask);
+                    added = true;
                     break;
                 }
-                currentIndex = currentIndex.next;
-                newIndex++;
             }
-            let projectName = current.data.name;
-            // Reinsert the task at the correct position using insertAt
-            taskList.insertAt(newIndex, updatedTask);
-            fetch("http://localhost:5000/log-task-update", {
+            if (!added)
+            {
+                taskList.add(updatedTask);
+            }
+            
+            fetch("http://localhost:5000/log-task-update", { //updatinam txt projekto
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -339,39 +327,11 @@ const ProjectDetails = (props) =>{
                     taskName: taskName,
                     status: "date-changed",
                     newDate: changeDate,
-                    projectName: projectName,
+                    projectName: current.data.name,
                 }),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log("Task update logged:", data.message);
-                })
-                .catch((error) => {
-                    console.error("Error logging task update:", error);
-                });
 
-            fetch("http://localhost:5000/log-task-update", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    taskName: taskName,
-                    status: "date-changed",
-                    newDate: changeDate,
-                    projectName: projectName,
-                }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Task update logged:", data.message);
-            })
-            .catch((error) => {
-                console.error("Error logging task update:", error);
-            });
-
-
-            fetch("http://localhost:5000/workers/update-task-deadline", {
+            fetch("http://localhost:5000/workers/update-task-deadline", {//updatinam darbuotojo jsona
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -382,133 +342,82 @@ const ProjectDetails = (props) =>{
                     newDeadline: changeDate,
                 }),
             })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Task update logged:", data.message);
-            })
-            .catch((error) => {
-                console.error("Error logging task update:", error);
-            });
 
             setChangeDate('');
+            updateProjectFile(); //updatinam jsona projekto
             triggerReRender();
-            updateProjectFile();
         } 
+            
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const finishTask = (taskName, worker) =>{
 
-
-        let temp = current; 
-        if (temp.data.participantsList.head.data.nameOfPart.name !== worker)
+        let temp;
+        for (let i = 0; i < current.data.participantsList.getSize(); i++) //susirandame darbuotoja
         {
-            temp = temp.data.participantsList.head.next;
-            while (temp.data.nameOfPart.name !== worker)
-            {
-                temp = temp.next;
-            }
-            temp = temp.data.allTasks.head;
-            while (temp.data.task !== taskName)
-            {
-                temp = temp.next;
-            }
-        }
-        else {
-            
-            temp = temp.data.participantsList.head.data.allTasks.head;
+            temp = current.data.participantsList.getNode(i);
+            if (temp.data.nameOfPart.name === worker.name)
+                break;
+        }   
+        
+        console.log(worker);
+        let list = temp;
+        let temp2 = temp;
+        let i;
+        for (i = 0; i < temp.data.allTasks.getSize(); i++) //susirandame darbuotojo tam tikra uzduoti
+        {
+            temp2 = temp.data.allTasks.getNode(i);
+            if (temp2.data.task === taskName)
+                break;
+        }    
+        
+        temp2.data.finished = true;//nustatome jog uzduotis baigta
 
-            while (temp.data.task !== taskName)
-            {
-                temp = temp.next;
-            }
-        }
-        temp.data.finished = true;
-        let projectName = current.data.name;
-        fetch("http://localhost:5000/log-task-update", {
+        fetch("http://localhost:5000/log-task-update", {//atnaujiname txt faila
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                taskName: taskName,
-                status: "finished",
-                projectName: projectName,
+                taskName: temp2.data.task,
+                status: 'finished',
+                projectName: current.data.name,
             }),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Task update logged:", data.message);
-        })
-        .catch((error) => {
-            console.error("Error logging task update:", error);
-        });
 
-        fetch("http://localhost:5000/workers/mark-task-finished", {
+        fetch("http://localhost:5000/workers/mark-task-finished", {//atnaujiname darbuotoju jsona
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: worker,
-                taskName: taskName,
+                name: temp.data.nameOfPart.name,
+                taskName: temp2.data.task,
             }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Task update logged:", data.message);
-        })
-        .catch((error) => {
-            console.error("Error logging task update:", error);
-        });
-
-
-
-
-        triggerReRender();
+        }) 
         updateProjectFile();
-
-
+        triggerReRender();
     };
-
-
 
     if (props.newProj)
     {
-        let curWorkers = props.workers.head;
         const elem = [];
-        const selected =[];
-        while(curWorkers != null)
-        {
+        for (let i = 0; i < props.workers.getSize(); i++) //pereiname per darbuotoju linkedlista renderinimui
+        {   
+            let worker = props.workers.getNode(i);
             let temp = {
-                name: curWorkers.data.name,
-                lastName: curWorkers.data.lastName, 
-                job: curWorkers.data.job
+                name: worker.data.name,
+                lastName: worker.data.lastName, 
+                job: worker.data.job
             };
             elem.push(
                 <div>
                     <a className="optionWorker" onClick={() => {
                         addWorker(temp);
                         }}>
-                        {curWorkers.data.name} {curWorkers.data.lastName} {curWorkers.data.job}</a>
+                        {worker.data.name} {worker.data.lastName} {worker.data.job}</a>
                 </div>
             )
-            curWorkers = curWorkers.next;
-
         }
         return (
             <div className="screen">
@@ -577,23 +486,20 @@ const ProjectDetails = (props) =>{
             </div> 
         ); 
     }
-    else if (props.workersDispl === true)
+    else if (props.workersDispl === true) //ataskaitu langas
     {
-        let current = props.workers.head; // Start from the head of the linked list
         const workersList = []; 
-        while (current != null) {
-            let temp = current;  
+        for (let i = 0; i < props.workers.getSize(); i++)
+        {
+            let temp = props.workers.getNode(i);  
             workersList.push(
                 <div className="worker">
-                        <h1>{current.data.name} {current.data.lastName} {current.data.job}</h1>
+                        <h1>{temp.data.name} {temp.data.lastName} {temp.data.job}</h1>
                         <button onClick={() => exportWorkerReport(temp)}>
                             Paruošti ataskaitą
                         </button>  
                 </div>
             );
-
-            current = current.next; // Move to the next node
-            
         }
         return (
             <div className="screen">
@@ -615,63 +521,70 @@ const ProjectDetails = (props) =>{
         ); 
     }
     else {
-        let curr = current.data.participantsList.head;
         let projId = current.data.id;
         const work = [];
         const today = new Date();
 
         let late = 0, weekLeft = 0, dayLeft = 0, numTask = 0, notFinished = 0;
         const nameWorkers = [];
-        while(curr != null)
+
+        for (let i = 0; i < current.data.participantsList.getSize(); i++) //einame per projekto darbuotojus
         {
+            const temp = current.data.participantsList.getNode(i);
+            const worker = temp.data.nameOfPart;
+            const name = worker.name;
             const task = [];
-            
-            let curTask = curr.data.allTasks.head;
-            const worker = curr.data.nameOfPart.name;
-            let name = curr.data.nameOfPart.name;
             nameWorkers.push(
                 <div>
-                    <a className="optionWorker" onClick={() => addTaskToWorker(name)}>{curr.data.nameOfPart.name}</a>
+                    <a className="optionWorker" onClick={() => addTaskToWorker(name)}>{name}</a>
                 </div>
             )
-            while(curTask != null)
-            {
-                const taskName = curTask.data.task;
 
-                const deadlineDate = new Date(curTask.data.deadline);
+            for (let j = 0; j < temp.data.allTasks.getSize(); j++) //einame per darbuotojo kiekvieno darbus
+            {
+                
+                const taskData = temp.data.allTasks.getNode(j);
+                const taskName = taskData.data.task;
+                const deadlineDate = new Date(taskData.data.deadline);
                 const timeDifference = (deadlineDate - today) / (1000 * 60 * 60 * 24);
-                let week = 0, day = 0, lat = 0;
+                let week = false, day = false, lat = false;
                 numTask += 1;
-                if(timeDifference > 7 && curTask.data.finished === false)
-                {notFinished += 1;}
-                else if(timeDifference > 1 && curTask.data.finished === false)
+                if(timeDifference > 7 && taskData.data.finished === false)
+                {
+                    notFinished += 1;
+                }   
+                else if(timeDifference > 1 && taskData.data.finished === false)
                 {
                     weekLeft += 1;
                     notFinished += 1;
-                    week = 1;
-                } else if (timeDifference > 0 && curTask.data.finished === false){
+                    week = true;
+                }   
+                else if (timeDifference > 0 && taskData.data.finished === false)
+                {
                     dayLeft += 1;
-                    day = 1;
                     notFinished += 1;
-                } else if(curTask.data.finished === false){
+                    day = true;
+                }   
+                else if(taskData.data.finished === false){
                     late += 1;
                     lat = 1;
                     notFinished += 1;
                 }
+                
                 task.push(
                     <div className="task">
                         <li className={
-                            curTask.data.finished ? "finished-task" :
+                            taskData.data.finished ? "finished-task" :
                             week === 1 ? "weekleft-task" :
                             day === 1 ? "dayleft-task" : 
                             lat === 1 ? "late-task":
                             ""
                             }>
-                                {curTask.data.finished 
-                                ? curTask.data.task 
-                                : `${curTask.data.task} Terminas iki: ${curTask.data.deadline}`}
+                                {taskData.data.finished 
+                                ? taskData.data.task 
+                                : `${taskData.data.task} Terminas iki: ${taskData.data.deadline}`}
                                 </li>
-                        {curTask.data.finished ? "": (
+                        {taskData.data.finished ? "": (
                             <div>
                                 <button onClick={() => finishTask(taskName, worker)}>Užbaigti užduotį</button>
                                 <button onClick={() => changeOldDate(taskName, worker)}>Pakeisti terminą</button>
@@ -679,23 +592,20 @@ const ProjectDetails = (props) =>{
                             )}
                     </div>
                 )
-                curTask = curTask.next;
             }
-
             work.push(
                 <div className="workerField">
                     <div className="workerName">
                         <div>
-                            {curr.data.nameOfPart.name} {curr.data.nameOfPart.lastName} {curr.data.nameOfPart.jobTitle}
+                            {worker.name} {worker.lastName} {worker.jobTitle}
                         </div>
                     </div>
-                    Užduotys:  {curr.data.nameOfPart.numOfTasks}
+                    Užduotys:  {worker.numOfTasks}
                     <div>
                         {task}
                     </div>
                 </div>
             )
-            curr = curr.next;
         }
         return (
             <div className="screen">
@@ -747,7 +657,6 @@ const ProjectDetails = (props) =>{
                 </div>
             </div>
         );
-        
     }
 }
 

@@ -1,30 +1,25 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors'); // Import the CORS package
-const { time } = require('console');
+const cors = require('cors'); 
+
 
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
-
-// Enable CORS for all routes
 app.use(cors());
 
-// OR, to restrict it to a specific origin:
-// app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.post('/log-task-update', (req, res) => {
     const { taskName, status, newDate, projectName, deadline } = req.body;
     const timestamp = new Date().toISOString().split('T')[0];
-    // Define the content of the text file based on the project object
+
     const logFilePath = path.join(
         'C:/Users/Justas/Desktop/projektuvaldymosistema/httpsgithubcomSuprymasprojektuValdymoSistema1/projektuvaldymosistema/src/projectDocuments',
         `${projectName}-log.txt`
     );
 
-    // Determine the log message
     let logMessage;
     if (status === 'finished') {
         logMessage = `\n${taskName} - baigta (${timestamp})`;
@@ -40,11 +35,8 @@ app.post('/log-task-update', (req, res) => {
             logMessage = `\n------------------------Projektas baigtas veluojant (${timestamp})--------------------`;
         }
         
-    } else {
-        return res.status(400).json({ error: 'Invalid status' });
     }
 
-    // Append the log message to the file
     fs.appendFile(logFilePath, logMessage + '\n', (err) => {
         if (err) {
             console.error('Error appending to log file:', err);
@@ -59,7 +51,6 @@ app.post('/update-project-text-document', (req, res) => {
     const { project } = req.body;
     const formattedDate = new Date().toISOString().split('T')[0];
 
-    // Define the content of the text file based on the project object
     let fileContent = `
     ${project.name}
 
@@ -69,12 +60,12 @@ app.post('/update-project-text-document', (req, res) => {
     `;
 
 
-    // Specify the file path on your computer (you can change this path)
+
     const filePath = path.join(
         'C:/Users/Justas/Desktop/projektuvaldymosistema/httpsgithubcomSuprymasprojektuValdymoSistema1/projektuvaldymosistema/src/projectDocuments', 
         `${project.name}.txt`);
 
-    // Write the content to a file
+
     fs.writeFile(filePath, fileContent, (err) => {
         if (err) {
             console.error("Error saving the file:", err);
@@ -106,14 +97,12 @@ app.post('/update-project-json', (req, res) => {
             return res.status(500).json({ error: 'Invalid JSON file format' });
         }
 
-        // Check if the project already exists (match by unique id)
+
         const existingProjectIndex = projectsArray.findIndex(p => p.id === project.id);
 
         if (existingProjectIndex !== -1) {
-            // Update existing project
             projectsArray[existingProjectIndex] = project;
         } else {
-            // Add new project
             projectsArray.push(project);
         }
 
@@ -133,26 +122,25 @@ app.post('/save-project-file', (req, res) => {
     const { project } = req.body;
     const timestamp = new Date().toISOString().split('T')[0];
 
-    // Format the content
+
     const content = `${project.name}\n\n` +
         `Aprašymas:      ${project.description}\n` +
         `Terminas:       ${project.deadline}\n` +
         `Pradžios Data:  ${timestamp}\n`;
 
-    // Define the file path and name
+
     const fileName = `${project.name}-log.txt`;
     const filePath = path.join(
         'C:/Users/Justas/Desktop/projektuvaldymosistema/httpsgithubcomSuprymasprojektuValdymoSistema1/projektuvaldymosistema/src/projectDocuments', 
         fileName
     );
 
-    // Ensure the directory exists
     const dirPath = path.dirname(filePath);
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    // Write the content to the file
+
     fs.writeFile(filePath, content, (err) => {
         if (err) {
             console.error('Error creating file:', err);
@@ -171,7 +159,7 @@ app.post('/add-task', (req, res) => {
         'workers.json'
     );
 
-    // Read the existing worker data
+
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to read worker data.' });
@@ -184,17 +172,16 @@ app.post('/add-task', (req, res) => {
             return res.status(404).json({ error: 'Worker not found.' });
         }
 
-        // Create new task object
+
         const newTask = {
             task,
             deadline,
             finished: false
         };
 
-        // Insert new task in the correct position
-        worker.tasks.push(newTask); // Add new task to the end
+        worker.tasks.push(newTask); 
 
-        // Write updated data back to the JSON file
+
         fs.writeFile(filePath, JSON.stringify(workers, null, 2), 'utf8', (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to update worker data.' });
@@ -206,7 +193,7 @@ app.post('/add-task', (req, res) => {
 
 
 app.post('/workers/mark-task-finished', (req, res) => {
-    const { name, taskName } = req.body; // Now using taskName instead of taskIndex
+    const { name, taskName } = req.body;
     const filePath = path.join(
         'C:/Users/Justas/Desktop/projektuvaldymosistema/httpsgithubcomSuprymasprojektuValdymoSistema1/projektuvaldymosistema/src/jsonfiles', 
         'workers.json'
@@ -219,15 +206,14 @@ app.post('/workers/mark-task-finished', (req, res) => {
 
         if (!worker) return res.status(404).json({ error: 'Worker not found.' });
 
-        // Find the task by taskName
         const task = worker.tasks.find(t => t.task === taskName);
 
         if (!task) return res.status(404).json({ error: 'Task not found.' });
 
-        // Mark the task as finished
+
         task.finished = true;
 
-        // Write updated data back to the JSON file
+
         fs.writeFile(filePath, JSON.stringify(workers, null, 2), 'utf8', (err) => {
             if (err) return res.status(500).json({ error: 'Failed to update worker data.' });
             res.json({ message: 'Task marked as finished successfully.' });
@@ -253,13 +239,57 @@ app.post('/workers/update-task-deadline', (req, res) => {
 
         if (!task) return res.status(404).json({ error: 'Task not found.' });
 
-        // Update the deadline of the task
+
         task.deadline = newDeadline;
 
-        // Write updated data back to the JSON file
         fs.writeFile(filePath, JSON.stringify(workers, null, 2), 'utf8', (err) => {
             if (err) return res.status(500).json({ error: 'Failed to update worker data.' });
             res.json({ message: 'Task deadline updated successfully.' });
+        });
+    });
+});
+
+app.post('/worker/add-tasks', (req, res) => {
+    const workersTasks = req.body; // Expecting an object like { "Petras": [...tasks], "Matas": [...tasks] }
+    const workersFilePath = path.join(
+        'C:/Users/Justas/Desktop/projektuvaldymosistema/httpsgithubcomSuprymasprojektuValdymoSistema1/projektuvaldymosistema/src/jsonfiles', 
+        'workers.json'
+    );
+    if (!workersTasks || typeof workersTasks !== 'object') {
+        return res.status(400).json({ message: 'Invalid input. Please provide tasks for workers in a valid object.' });
+    }
+
+    // Read the current workers JSON file
+    fs.readFile(workersFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ message: 'Error reading workers file.' });
+        }
+
+        let workers;
+        try {
+            workers = JSON.parse(data); // Parse JSON file content
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            return res.status(500).json({ message: 'Error parsing workers data.' });
+        }
+
+        // Update tasks for each worker
+        for (const [workerName, tasks] of Object.entries(workersTasks)) {
+            const worker = workers.find(worker => worker.name === workerName);
+            if (worker) {
+                worker.tasks.push(...tasks); // Add tasks to the worker
+            }
+        }
+
+        // Write updated workers back to the file
+        fs.writeFile(workersFilePath, JSON.stringify(workers, null, 2), (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing file:', writeErr);
+                return res.status(500).json({ message: 'Error saving tasks to workers file.' });
+            }
+
+            return res.status(200).json({ message: 'Tasks added successfully.', workers });
         });
     });
 });

@@ -78,17 +78,17 @@
       {
         "task": "Pradinis svetainės dizainas",
         "deadline": "2024-09-30",
-        "finished": true
+        "finished": false
       },
       {
         "task": "Navigacijos sistemos kūrimas",
         "deadline": "2024-10-15",
-        "finished": true
+        "finished": false
       },
       {
         "task": "Prisitaikančio dizaino pritaikymas",
         "deadline": "2024-10-30",
-        "finished": true
+        "finished": false
       }
     ]
   },

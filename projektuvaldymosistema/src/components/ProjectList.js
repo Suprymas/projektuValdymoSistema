@@ -3,7 +3,6 @@ import './ProjectList.css';
  
 
 const ProjectList = (props) => {
-    console.log(props.projects);
     return (  
         <div className="list">
             <div className='Buttons'>
@@ -13,10 +12,11 @@ const ProjectList = (props) => {
                 <button id='newProject1' onClick={props.workers}>Darbuotojai</button> 
             </div> 
             {(() => { 
-                let current = props.projects.head; // Start from the head of the linked list
                 const elements = []; 
-                while (current != null) {  
-                    const temp = current; //storing the project into a variable so that when it is pressed we could return it
+                for (let i = 0; i < props.projects.getSize(); i++) //einam per doublylinked lista ir renderinam viska
+                {
+                    const current = props.projects.getNode(i);
+                    const temp = current;
                     elements.push(
                         <div className="projectproperties">
                             <div>
@@ -33,7 +33,6 @@ const ProjectList = (props) => {
                             </button>  
                         </div>
                     );  
-                    current = current.next; // Move to the next node
                 }
                 return elements;
             })()}

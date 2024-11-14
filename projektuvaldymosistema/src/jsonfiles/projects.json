@@ -88,17 +88,17 @@
           {
             "task": "Pradinis svetainės dizainas",
             "deadline": "2024-09-30",
-            "finished": true
+            "finished": false
           },
           {
             "task": "Navigacijos sistemos kūrimas",
             "deadline": "2024-10-15",
-            "finished": true
+            "finished": false
           },
           {
             "task": "Prisitaikančio dizaino pritaikymas",
             "deadline": "2024-10-30",
-            "finished": true
+            "finished": false
           }
         ]
       },
@@ -142,7 +142,7 @@
         "name": "Petras",
         "lastName": "Petrauskas",
         "jobTitle": "UI dizaineris",
-        "numOfTasks": 4,
+        "numOfTasks": 3,
         "tasks": [
           {
             "task": "Pagrindinio puslapio dizainas",
@@ -158,11 +158,6 @@
             "task": "Mobilios versijos dizainas",
             "deadline": "2024-10-15",
             "finished": false
-          },
-          {
-            "task": "apsisikelis",
-            "deadline": "2024-12-21",
-            "finished": false
           }
         ]
       }
@@ -171,6 +166,7 @@
   {
     "id": "SEOe0120",
     "name": "SEO ir rinkodaros strategija",
+    "description": "Projekte bus vystoma SEO strategija siekiant pagerinti svetainės matomumą paieškos sistemose. Projektas apims ir UX patobulinimus pagal SEO reikalavimus.",
     "endDate": "2025-01-20",
     "numOfParticip": 2,
     "participants": [
@@ -215,7 +211,6 @@
           }
         ]
       }
-    ],
-    "description": "Projekte bus vystoma SEO strategija siekiant pagerinti svetainės matomumą paieškos sistemose. Projektas apims ir UX patobulinimus pagal SEO reikalavimus."
+    ]
   }
 ]

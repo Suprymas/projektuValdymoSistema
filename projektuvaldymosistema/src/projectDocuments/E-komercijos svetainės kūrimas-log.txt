@@ -3,21 +3,3 @@ E-komercijos svetainės kūrimas
 Aprašymas:      Kuriama moderni e-komercijos svetainė su patogia vartotojo sąsaja ir optimizuotu pirkinių krepšeliu. Projektas apima front-end ir back-end programavimą bei UX/UI dizaino kūrimą.
 Terminas:       2024-11-15
 Pradžios Data:  2024-11-12
-
-Pradinis svetainės dizainas - pakeista data į 2024-12-30 (2024-11-12)
-
-apsisikelis - baigta (2024-11-13)
-
-Pagrindinio puslapio dizainas - baigta (2024-11-13)
-
-Produktų katalogo dizainas - baigta (2024-11-13)
-
-Mobilios versijos dizainas - baigta (2024-11-13)
-
-Vartotojo kelionės planavimas - pakeista data į 2024-12-30 (2024-11-13)
-
-Pradinis svetainės dizainas - baigta (2024-11-13)
-
-Navigacijos sistemos kūrimas - baigta (2024-11-13)
-
-Prisitaikančio dizaino pritaikymas - baigta (2024-11-13)

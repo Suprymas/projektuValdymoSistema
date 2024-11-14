@@ -21,7 +21,6 @@ export class DoublyLinkedList {
 		return false;
 	}
  
-	// Method to add item at the last of doubly linked list
 	add(project) {
 		
 		let temp = new Node(project);
@@ -39,41 +38,11 @@ export class DoublyLinkedList {
         this.size += 1;
 	}
 
-	removeProject(projectId) { 
-        let current = this.head;
-        
-        while (current) { 
-            if (current.data.id === projectId) {
-                if (current === this.head && current === this.tail) {
-                    // Only one item in the list
-                    this.head = null; 
-                    this.tail = null; 
-                } else if (current === this.head) {
-                    // Removing the head
-					this.head = this.head.next;
-                    this.head.prev = null;
-                } else if (current === this.tail) {
-                    // Removing the tail
-                    this.tail = this.tail.prev;
-                    this.tail.next = null;
-                } else {
-                    // Removing a node in the middle
-                    current.prev.next = current.next;
-                    current.next.prev = current.prev;
-                }
-                this.size--;
-                return true;
-            }
-            current = current.next;
-        }
-        return false; // Project not found
-    }
-
     insertAt(index, data) {
         const newNode = new Node(data);
 
         if (index === 0) {
-            // Insert at the beginning
+
             if (this.isEmpty()) {
                 this.head = newNode;
                 this.tail = newNode;
@@ -93,13 +62,11 @@ export class DoublyLinkedList {
             let current = this.head;
             let currentIndex = 0;
 
-            // Traverse to the node before the desired position
             while (currentIndex < index - 1) {
                 current = current.next;
                 currentIndex++;
             }
 
-            // Insert in the middle
             newNode.next = current.next;
             newNode.prev = current;
             current.next.prev = newNode;
@@ -113,7 +80,7 @@ export class DoublyLinkedList {
         let current;
 
         if (index === 0) {
-            // Remove from the head
+
             if (this.head === this.tail)
             {
                 this.head = null;
@@ -125,12 +92,12 @@ export class DoublyLinkedList {
                 this.head.prev = null;
             }
         } else if (index === this.size - 1) {
-            // Remove from the tail
+
             current = this.tail;
             this.tail = this.tail.prev;
             this.tail.next = null;
         } else {
-            // Remove from the middle
+
             current = this.head;
             let currentIndex = 0;
 
@@ -144,7 +111,6 @@ export class DoublyLinkedList {
         }
 
         this.size -= 1;
-        return current.data; // Return the removed data
     }
 
 	getAllProjects() {
@@ -162,5 +128,31 @@ export class DoublyLinkedList {
 		this.tail = null;
         this.size = 0;
 	}
+
+    getSize(){
+        return this.size;
+    }
+
+    getNode(index){
+        let current;
+
+        if (index < this.size / 2) {
+            current = this.head;
+            let currentIndex = 0;
+            while (currentIndex < index) {
+                current = current.next;
+                currentIndex++;
+            }
+        } else {
+            current = this.tail;
+            let currentIndex = this.size - 1;
+            while (currentIndex > index) {
+                current = current.prev;
+                currentIndex--;
+            }
+        }
+
+        return current;
+    }
 }
 
