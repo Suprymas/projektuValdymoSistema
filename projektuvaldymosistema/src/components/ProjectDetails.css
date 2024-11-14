@@ -95,3 +95,7 @@ button{
     display: flex;
     justify-content: center;
 }
+
+.addWorkers{
+    margin-top: 10px;
+}

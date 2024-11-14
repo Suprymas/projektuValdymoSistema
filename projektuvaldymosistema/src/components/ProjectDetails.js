@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import './ProjectDetails.css';
 import workerData from '../jsonfiles/workers.json';
+import { DoublyLinkedList } from "../dataStructs/doublyLinkedList";
 
 const ProjectDetails = (props) =>{
     const [renderTrigger, setRenderTrigger] = useState(false);
@@ -12,6 +13,8 @@ const ProjectDetails = (props) =>{
     const [newTask, setNewTask] = useState('');
     const [newDate, setNewDate] = useState('')
     const [changeDate, setChangeDate] = useState('')
+    const [selectedTasks, setSelectedTasks] = useState([]);
+
 
 
 
@@ -145,6 +148,15 @@ const ProjectDetails = (props) =>{
     {
         setNewDate(event.target.value);
     };
+
+    function handleTaskCheckboxChange(taskName) {
+        setSelectedTasks((prevSelected) =>
+            prevSelected.includes(taskName)
+                ? prevSelected.filter((task) => task !== taskName) // Deselect if already selected
+                : [...prevSelected, taskName] // Add to selection if not already selected
+        );
+    }
+    
 //--------------------------------------
 
     const saveProjectToFile = (project) => {
@@ -156,6 +168,78 @@ const ProjectDetails = (props) =>{
             body: JSON.stringify({ project }),
         })
     };
+
+    const addWorkerToProject = (worker) => {
+        current.data.participantsList.add({
+            nameOfPart: {
+                name: worker.name,
+                lastName: worker.lastName,
+                jobTitle: worker.jobTitle,
+                numOfTasks: 0,
+            },
+            allTasks: new DoublyLinkedList(),
+        });
+        triggerReRender();
+    }
+
+    const assignSelectedTasks = (newWorkerName) => {    //uzduociu perskirstymas
+        
+        selectedTasks.forEach((taskNode) => {
+            
+            let i;
+            let node = null;
+
+            for (i = 0; i < current.data.participantsList.getSize(); i++)
+            {
+                let temp = current.data.participantsList.getNode(i);
+                let j;
+                for (j = 0; j < temp.data.allTasks.getSize(); j++)
+                {
+                    let temp2 = temp.data.allTasks.getNode(j);
+                    if (temp2.data.task === taskNode.data.task)
+                    {
+                        temp.data.nameOfPart.numOfTasks--;
+                        temp.data.allTasks.removeAt(j);
+                        node = temp2;
+                        break;
+                    }   
+                }
+                if (node !== null) break;
+            }
+
+
+
+            for (i = 0; i < current.data.participantsList.getSize(); i++)
+            {
+                let temp = current.data.participantsList.getNode(i);
+                
+                if (temp.data.nameOfPart.name === newWorkerName)
+                {   
+                    let added = false;
+                    temp.data.nameOfPart.numOfTasks++;
+                    for (let k = 0; k < temp.data.allTasks.getSize(); k++) //ieskome kur pagal data galima ideti uzduoti
+                    {
+                        let taskEx = temp.data.allTasks.getNode(k);
+                        const tempDate = new Date(taskEx.data.deadline);
+                        const newDate = new Date(node.data.deadline);
+                        if (tempDate >= newDate)
+                        {
+                            temp.data.allTasks.insertAt(k, node.data);
+                            added = true;
+                            break;
+                        }
+                    }
+                    if (!added)
+                    {
+                        temp.data.allTasks.add(node.data);
+                    }
+                }
+            }
+        });
+    
+        triggerReRender();
+        setSelectedTasks([]);
+    }
     
 
     const createProject = async () => { //projekto sukurimas txt dokumento
@@ -226,7 +310,7 @@ const ProjectDetails = (props) =>{
             finished: false,
             task: newTask,
         }
-        console.log('alio');
+
         try {
             const response = await fetch('http://localhost:5000/add-task', { //pridedame i darbuotoju json faila nauja uzduoti
                 method: 'POST',
@@ -243,7 +327,7 @@ const ProjectDetails = (props) =>{
         catch{}
 
         const newTaskDate = new Date(task.deadline); //terminas
-            
+        temp.data.nameOfPart.numOfTasks++;
         if (temp.data.allTasks.getSize() === 0)
             temp.data.allTasks.add(task);
         else {
@@ -527,6 +611,37 @@ const ProjectDetails = (props) =>{
 
         let late = 0, weekLeft = 0, dayLeft = 0, numTask = 0, notFinished = 0;
         const nameWorkers = [];
+        const nonProjectWorkers = [];
+
+        for (let i = 0; i < props.workers.getSize(); i++) {
+            const currentWorker = props.workers.getNode(i);
+
+            let isInProject = false;
+            for (let j = 0; j < current.data.participantsList.getSize(); j++) {
+                const projectWorker = current.data.participantsList.getNode(j);
+                if (projectWorker.data.nameOfPart.name === currentWorker.data.name) {
+                    isInProject = true;
+                    break;
+                }
+            }
+
+            if (!isInProject) {
+                nonProjectWorkers.push(currentWorker.data);
+            }
+        }
+        console.log(nonProjectWorkers);
+
+        const nonProjectWorkersUI = nonProjectWorkers.map((worker) => (
+            <div key={worker.name} className="nonProjectWorker">
+                <span>
+                    {worker.name} {worker.lastName} - {worker.jobTitle}
+                </span>
+                <button onClick={() => addWorkerToProject(worker)}>
+                    Pridėti
+                </button>
+            </div>
+        ));
+
 
         for (let i = 0; i < current.data.participantsList.getSize(); i++) //einame per projekto darbuotojus
         {
@@ -536,9 +651,16 @@ const ProjectDetails = (props) =>{
             const task = [];
             nameWorkers.push(
                 <div>
-                    <a className="optionWorker" onClick={() => addTaskToWorker(name)}>{name}</a>
+                    <a className="optionWorker" onClick={() => {
+                        if (newTask && newDate) {
+                            addTaskToWorker(name);
+                        } else if (selectedTasks.length > 0) {
+                            assignSelectedTasks(name);
+                        }}}
+                    >{name}</a>
                 </div>
             )
+
 
             for (let j = 0; j < temp.data.allTasks.getSize(); j++) //einame per darbuotojo kiekvieno darbus
             {
@@ -588,6 +710,11 @@ const ProjectDetails = (props) =>{
                             <div>
                                 <button onClick={() => finishTask(taskName, worker)}>Užbaigti užduotį</button>
                                 <button onClick={() => changeOldDate(taskName, worker)}>Pakeisti terminą</button>
+                                <input
+                                    type="checkbox"
+                                    onChange={() => handleTaskCheckboxChange(taskData)}
+                                    checked={selectedTasks.includes(taskData)}
+                                />
                             </div>
                             )}
                     </div>
@@ -630,6 +757,10 @@ const ProjectDetails = (props) =>{
                     onChange={handleNewDate}
                     />
                     {nameWorkers}
+                    <div className="addWorkers">
+                        <strong>Pridėti darbuotoją prie projekto:</strong>
+                        {nonProjectWorkersUI}
+                    </div>
                 </div>
                 <div className="dateChange">
                     <input 
